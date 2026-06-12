@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand colors */
+  --color-accent: #a34b36;
+  --color-accent-dark: #8a3e2c;
+  --color-background: #f8f7f4;
+  --color-foreground: #1a1a1a;
+  --color-muted: #6b6560;
+  --color-border: rgba(0,0,0,0.08);
+  --color-border-light: rgba(0,0,0,0.06);
+  --color-surface: #f2f0ec;
+
+  /* Card backgrounds — deeper tones for contrast without shadows */
+  --color-card-cream: #ede8de;
+  --color-card-stone: #e3ddd4;
+  --color-card-sand: #ddd7ca;
+  --color-card-olive: #d8dbc9;
+  --color-card-clay: #ddd4c8;
+  --color-card-warmgrey: #e1e1dc;
+  --color-card-dark: #1c1c1a;
+  --color-card-accent: #a34b36;
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-michroma), ui-sans-serif, system-ui, sans-serif;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  /* Shadows — only for nav pill on scroll, not for cards */
+  --shadow-nav: 0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  line-height: 1.65;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-background); }
+::-webkit-scrollbar-thumb { background: var(--color-card-stone); border-radius: 3px; }
+
+/* ─── Typography ─── */
+.display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
+.display-md {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.8vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.005em;
+}
+
+.display-sm {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 1.8vw, 1.65rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0em;
+}
+
+.prose-body {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--color-foreground);
+  max-width: 68ch;
+}
+
+.prose-body p + p {
+  margin-top: 1.5em;
+}
+
+/* ─── Card system ─── */
+@layer components {
+  .card {
+    border-radius: 24px;
+    padding: 2rem;
+    transition: transform 0.2s ease;
+  }
+
+  .card:hover {
+    /* no shadow — contrast comes from the tonal background */
+  }
+
+  .card-cream {
+    background: var(--color-card-cream);
+  }
+
+  .card-stone {
+    background: var(--color-card-stone);
+  }
+
+  .card-sand {
+    background: var(--color-card-sand);
+  }
+
+  .card-olive {
+    background: var(--color-card-olive);
+  }
+
+  .card-clay {
+    background: var(--color-card-clay);
+  }
+
+  .card-warmgrey {
+    background: var(--color-card-warmgrey);
+  }
+
+  .card-dark {
+    background: var(--color-card-dark);
+    color: #f5f0e8;
+  }
+
+  .card-accent {
+    background: var(--color-card-accent);
+    color: #fff;
+  }
+
+  .container-wide {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .container-wide {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+/* ─── Animation ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
