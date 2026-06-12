@@ -14,7 +14,7 @@ export const searchItems: SearchItem[] = [
   { title: "Support", href: "/support", category: "Pages", description: "Help, FAQs, and contact" },
   { title: "Trail Beam", href: "/products/trail-beam", category: "Products", description: "Auxiliary LED fog lamps — ₹7,000" },
   { title: "Trail Kit", href: "/products/trail-kit", category: "Products", description: "Modular adventure utility system — ₹5,000" },
-  { title: "myto navi", href: "/products/myto-navi", category: "Products", description: "Dedicated motorcycle navigation — ₹11,000" },
+  { title: "Navi", href: "/products/navi", category: "Products", description: "Dedicated motorcycle navigation — ₹11,000" },
   { title: "Contact us", href: "mailto:clubmyto@gmail.com", category: "Contact", description: "clubmyto@gmail.com" },
 ];
 

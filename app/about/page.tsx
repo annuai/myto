@@ -88,7 +88,7 @@ const materials = [
   },
   {
     name: "Silicone dampers",
-    why: "Shore 45A hardness provides the right balance between vibration absorption and positional stability. Used in both the Trail Beam harness and myto navi mount.",
+    why: "Shore 45A hardness provides the right balance between vibration absorption and positional stability. Used in both the Trail Beam harness and Navi mount.",
   },
 ];
 

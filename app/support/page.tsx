@@ -53,8 +53,8 @@ const productHubs = [
     links: ["Bag setup", "Canvas care", "Strapping system"],
   },
   {
-    name: "myto navi",
-    slug: "myto-navi",
+    name: "Navi",
+    slug: "navi",
     description: "First setup, offline map downloads, battery replacement, and mount adjustment.",
     links: ["First setup", "Map downloads", "Mount adjustment"],
   },
@@ -75,12 +75,12 @@ const faqs: Record<string, FAQItem[]> = {
   Installation: [
     { q: "How difficult is the Trail Beam installation?", a: "The Trail Beam installs in 60–90 minutes with basic hand tools. No electrical expertise required — the included harness uses a relay and pre-wired fuse. The installation guide covers the full process with photographs." },
     { q: "Do I need to modify my bike for the Trail Kit?", a: "No. The Trail Kit uses magnetic mounting for the tank bag — no drilling or modification required. The tool roll attaches to PALS webbing or can be packed inside most tail bags." },
-    { q: "What tools do I need for myto navi installation?", a: "Only the included Allen key. The mount clamps to your handlebar with two bolts and the navi snaps onto the mount. The full process takes about 20 minutes." },
+    { q: "What tools do I need for Navi installation?", a: "Only the included Allen key. The mount clamps to your handlebar with two bolts and the navi snaps onto the mount. The full process takes about 20 minutes." },
   ],
   Warranty: [
     { q: "What does the warranty cover?", a: "The 2-year warranty covers manufacturing defects, material failures, and workmanship issues under normal use. It doesn't cover damage from accidents, incorrect installation, or modifications." },
     { q: "How do I make a warranty claim?", a: "Email clubmyto@gmail.com with your order number, a description of the issue, and photographs. We aim to respond within 24 hours and resolve all warranty claims within 7 business days." },
-    { q: "Does the warranty cover the myto navi battery?", a: "The battery is covered against manufacturing defects for 2 years. Normal capacity degradation over time is not covered, but the battery is user-replaceable and we stock replacements." },
+    { q: "Does the warranty cover the Navi battery?", a: "The battery is covered against manufacturing defects for 2 years. Normal capacity degradation over time is not covered, but the battery is user-replaceable and we stock replacements." },
   ],
 };
 

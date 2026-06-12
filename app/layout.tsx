@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: "%s | myto-moto",
   },
   description:
-    "Thoughtfully engineered tools for riders who travel further. Trail Beam, Trail Kit, and myto navi — designed through research, prototyping, and real-world testing.",
+    "Thoughtfully engineered tools for riders who travel further. Trail Beam, Trail Kit, and Navi — designed through research, prototyping, and real-world testing.",
   keywords: [
     "motorcycle accessories",
     "motorcycle gear",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     "auxiliary lights",
     "motorcycle navigation",
     "trail beam",
-    "myto navi",
+    "Navi",
     "adventure riding India",
   ],
   metadataBase: new URL("https://myto-moto.com"),

@@ -67,7 +67,7 @@ export function Navigation() {
             animate={
               floatingPill
                 ? {
-                    borderRadius: 20,
+                    borderRadius: 9999,
                     boxShadow: "0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06)",
                   }
                 : {

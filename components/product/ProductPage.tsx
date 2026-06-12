@@ -45,7 +45,7 @@ const reviewsBySlug: Record<string, { name: string; stars: number; text: string;
     { name: "Arjun K.", stars: 5, text: "The tool roll is exactly what I've been looking for. Proper sized pockets, proper material. The waxed canvas already has some character after two months.", location: "Hyderabad" },
     { name: "Meera N.", stars: 5, text: "Worth every rupee. Expands just enough for an overnight kit when I need it. The map window works with my Pixel 7 Pro perfectly.", location: "Chennai" },
   ],
-  "myto-navi": [
+  "navi": [
     { name: "Siddharth V.", stars: 5, text: "Finally. A device that does one thing and does it properly. The display is the best I've seen on anything motorcycling-adjacent.", location: "Ahmedabad" },
     { name: "Aditya L.", stars: 5, text: "Rode 8 days without a signal connection. The offline maps are genuinely comprehensive. Didn't miss my phone once.", location: "Jaipur" },
     { name: "Neeraj P.", stars: 5, text: "The vibration isolation mount is worth the price of entry alone. My phone screen always had micro-blur on my old 390 Adventure. Nothing with the navi.", location: "Chandigarh" },
@@ -69,12 +69,12 @@ const faqsBySlug: Record<string, { q: string; a: string }[]> = {
     { q: "Can the tool roll be attached externally?", a: "Yes. The tool roll has PALS/MOLLE-compatible webbing on the back and can be mounted to any PALS system or lashed to external luggage with the included straps." },
     { q: "Is the tank bag rainproof without a cover?", a: "The 600D polyester outer with PU coating and YKK water-resistant zips handles sustained rain without a rain cover. The internal PU-coated lining provides an additional waterproofing layer." },
   ],
-  "myto-navi": [
+  "navi": [
     { q: "How do I download maps?", a: "Connect the navi to Wi-Fi via the settings menu, navigate to Map Downloads, and select regions. India is pre-loaded. Additional regions (Nepal, Bhutan, Sri Lanka) are available as free downloads." },
     { q: "Does the navi work without GPS signal?", a: "The navi uses multi-constellation GPS (GPS + GLONASS) for maximum signal coverage. In areas with poor satellite visibility, it uses stored track data to maintain position. It does not require mobile data at any point." },
     { q: "What's the battery life with the display at maximum brightness?", a: "At maximum brightness (800 nits), battery life is approximately 9 hours. At 50% brightness, which is sufficient for most daytime conditions, battery life extends to 14+ hours. The navi can charge via USB-C while riding." },
     { q: "Can I import custom routes?", a: "Yes. The navi accepts GPX files via USB-C connection. Import custom routes through the desktop companion app (Windows/Mac) and they appear in the Route Library on the device." },
-    { q: "Is the mount compatible with RAM Ball systems?", a: "The myto navi mount is compatible with RAM 1\" B-ball systems, giving access to the full RAM mounting ecosystem for different handlebar configurations and mounting positions." },
+    { q: "Is the mount compatible with RAM Ball systems?", a: "The Navi mount is compatible with RAM 1\" B-ball systems, giving access to the full RAM mounting ecosystem for different handlebar configurations and mounting positions." },
     { q: "What happens if the screen is damaged?", a: "The screen protector (pre-applied) absorbs most minor impacts. For screen replacement, contact us — it's a warranted component and we carry replacement units. The device can be sent in for screen service." },
   ],
 };
@@ -93,7 +93,7 @@ const compatibilityBySlug: Record<string, { category: string; bikes: string[] }[
     { category: "Adventure bikes", bikes: ["All 600cc+ adventure motorcycles", "KTM Adventure range", "BMW GS range", "Royal Enfield Himalayan"] },
     { category: "Note", bikes: ["Non-steel or carbon fibre tanks are not compatible with magnetic mounting", "Tanks with large plastic covers over the magnetic area may reduce hold strength"] },
   ],
-  "myto-navi": [
+  "navi": [
     { category: "Universal fitment", bikes: ["22mm (7/8\") handlebars — all manufacturers", "28.6mm (1-1/8\") handlebars — all manufacturers", "RAM 1\" B-ball compatible"] },
     { category: "Charging", bikes: ["All motorcycles with 12V USB-C socket", "12V socket (requires USB-C adapter, not included)", "Power banks for off-bike use"] },
   ],
@@ -263,7 +263,7 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
               {engineeringSteps.map((step, i) => (
                 <FadeUp key={step.n} delay={i * 0.06}>
                   <div
-                    className="p-5 border-b border-r last:border-r-0 md:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:[&:nth-child(3n)]:border-r-0"
+                    className="h-full p-5 border-b border-r last:border-r-0 md:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:[&:nth-child(3n)]:border-r-0"
                     style={{ borderColor: "rgba(0,0,0,0.08)" }}
                   >
                     <span className="text-xs font-mono font-bold block mb-2" style={{ color: "var(--color-accent)" }}>
