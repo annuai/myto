@@ -45,30 +45,26 @@ export function Navigation() {
     <>
       {/* Outer wrapper */}
       <div className="fixed top-0 left-0 right-0 z-50 flex items-start justify-center pointer-events-none">
-        {/* The actual nav bar — shrinks to content width when pill */}
+        {/* Nav bar — pill uses container-wide max-width, full-width otherwise */}
         <motion.header
-          className="pointer-events-auto"
+          className="pointer-events-auto w-full"
+          style={{ maxWidth: floatingPill ? 1400 : "none" }}
           animate={
             floatingPill
-              ? { marginTop: 12, width: "auto" }
-              : { marginTop: 0, width: "100%" }
+              ? { marginTop: 12, paddingLeft: 32, paddingRight: 32 }
+              : { marginTop: 0, paddingLeft: 0, paddingRight: 0 }
           }
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          style={{ minWidth: floatingPill ? 0 : "100%" }}
         >
           <motion.div
             animate={
               floatingPill
                 ? {
                     borderRadius: 20,
-                    paddingLeft: 20,
-                    paddingRight: 20,
                     boxShadow: "0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06)",
                   }
                 : {
                     borderRadius: 0,
-                    paddingLeft: 0,
-                    paddingRight: 0,
                     boxShadow: "none",
                   }
             }
@@ -79,9 +75,8 @@ export function Navigation() {
               borderBottom: !floatingPill && !isHeroPage ? "1px solid rgba(0,0,0,0.07)" : "none",
             }}
           >
-            {/* When pill: inner content has fixed padding; when full-width: use container-wide */}
             <div className={floatingPill ? "" : "container-wide"}>
-              <div className="flex items-center justify-between h-14" style={floatingPill ? { gap: "2rem" } : {}}>
+              <div className="flex items-center justify-between h-14" style={floatingPill ? { paddingLeft: 8, paddingRight: 8 } : {}}>
                 {/* Logo — always dark since hero is white */}
                 <Link href="/" className="flex items-center">
                   <div className="relative h-6 w-20">
