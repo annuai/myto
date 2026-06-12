@@ -153,7 +153,7 @@ export default function HomePage() {
                 className="inline-flex items-center px-6 py-3 rounded-2xl text-sm font-medium border transition-all hover:bg-black/5"
                 style={{ color: "var(--color-foreground)", borderColor: "rgba(26,26,26,0.16)" }}
               >
-                Our story
+                Story
               </Link>
             </motion.div>
           </div>

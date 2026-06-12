@@ -2,8 +2,8 @@
 
 @theme {
   /* Brand colors */
-  --color-accent: #a34b36;
-  --color-accent-dark: #8a3e2c;
+  --color-accent: #BE3A23;
+  --color-accent-dark: #a2311e;
   --color-background: #f8f7f4;
   --color-foreground: #1a1a1a;
   --color-muted: #6b6560;
@@ -19,7 +19,7 @@
   --color-card-clay: #ddd4c8;
   --color-card-warmgrey: #e1e1dc;
   --color-card-dark: #1c1c1a;
-  --color-card-accent: #a34b36;
+  --color-card-accent: #BE3A23;
 
   /* Typography */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;

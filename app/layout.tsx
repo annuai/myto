@@ -38,6 +38,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://myto-moto.com"),
   alternates: { canonical: "/" },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
+  icons: { icon: "/favicon.png", shortcut: "/favicon.png", apple: "/favicon.png" },
   openGraph: {
     title: "myto-moto — Thoughtfully Engineered Motorcycle Accessories",
     description:
