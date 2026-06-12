@@ -100,11 +100,13 @@ export default function ClubPage() {
             className="flex flex-col sm:flex-row gap-3"
           >
             <a
-              href="mailto:clubmyto@gmail.com"
+              href="https://chat.whatsapp.com/EsdxZquNyIICasiv7HPVoz?mode=gi_t"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center px-7 py-3.5 rounded-2xl text-sm font-semibold transition-all hover:opacity-90"
               style={{ background: "var(--color-accent)", color: "#fff" }}
             >
-              Request to join →
+              Join on WhatsApp →
             </a>
             <Link
               href="/journal"
@@ -128,12 +130,12 @@ export default function ClubPage() {
               <h2 className="display-md mb-6 max-w-lg">A WhatsApp group, for now.</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
                 <div>
-                  <p className="font-semibold mb-2" style={{ color: "var(--color-foreground)" }}>01 — Email us</p>
-                  <p>Send a message to clubmyto@gmail.com. Tell us where you ride and what you ride. That's all we need.</p>
+                  <p className="font-semibold mb-2" style={{ color: "var(--color-foreground)" }}>01 — Click to join</p>
+                  <p>Tap the invite link and join the WhatsApp group directly. No approval, no waitlist — just click and you&apos;re in.</p>
                 </div>
                 <div>
-                  <p className="font-semibold mb-2" style={{ color: "var(--color-foreground)" }}>02 — Get added</p>
-                  <p>We'll add you to the WhatsApp group. It's an active group — check in, share updates, ask questions.</p>
+                  <p className="font-semibold mb-2" style={{ color: "var(--color-foreground)" }}>02 — Introduce yourself</p>
+                  <p>Tell the group where you ride and what you ride. That&apos;s the only entry requirement.</p>
                 </div>
                 <div>
                   <p className="font-semibold mb-2" style={{ color: "var(--color-foreground)" }}>03 — Shape the products</p>
@@ -178,14 +180,16 @@ export default function ClubPage() {
                 If you ride far, you belong here.
               </h2>
               <p className="text-base leading-relaxed max-w-lg mb-8" style={{ color: "rgba(245,240,232,0.55)" }}>
-                Email clubmyto@gmail.com to join. No questionnaire, no approval process — just tell us where you ride.
+                Click the link to join the WhatsApp group directly. No questionnaire, no approval — just click and you&apos;re in.
               </p>
               <a
-                href="mailto:clubmyto@gmail.com"
+                href="https://chat.whatsapp.com/EsdxZquNyIICasiv7HPVoz?mode=gi_t"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center px-7 py-3.5 rounded-2xl text-sm font-semibold transition-all hover:opacity-90"
                 style={{ background: "var(--color-accent)", color: "#fff" }}
               >
-                clubmyto@gmail.com →
+                Join on WhatsApp →
               </a>
             </div>
           </FadeUp>

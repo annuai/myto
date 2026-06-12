@@ -474,11 +474,13 @@ export default function HomePage() {
                 Every product in the range started as a problem someone on a real ride encountered. If you've ridden far enough to know that good kit matters, you're already one of us.
               </p>
               <a
-                href="mailto:clubmyto@gmail.com"
+                href="https://chat.whatsapp.com/EsdxZquNyIICasiv7HPVoz?mode=gi_t"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm font-semibold transition-opacity hover:opacity-75"
                 style={{ color: "var(--color-accent)" }}
               >
-                Join the community →
+                Join on WhatsApp →
               </a>
             </div>
           </FadeUp>
