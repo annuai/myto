@@ -29,7 +29,7 @@ export const products: Product[] = [
       "A pair of auxiliary LED fog lamps engineered from scratch for adventure riders. CFD-optimised housing reduces drag, IP67 sealing handles submersion, and 1800 lumens per lamp genuinely changes what's visible at night.",
     longDescription:
       "Stock headlights are designed for road approval, not for the conditions adventure riders actually encounter. The Trail Beam was built to solve that gap — starting with the housing shape. Multiple CFD iterations shaped the aerodynamic profile until turbulent drag at 120 km/h was minimised. The electronics use a constant-current driver with thermal regulation so output stays consistent regardless of temperature. The IP67-rated housing has a conformal-coated PCB and full gasket sealing throughout.",
-    price: 24999,
+    price: 7000,
     category: "Lighting",
     features: [
       {
@@ -109,7 +109,7 @@ export const products: Product[] = [
       "A modular adventure utility system built around a magnetic tank bag that expands from 8L to 12L, a waxed canvas tool roll, and a comprehensive strapping kit. Designed for riders who travel far from easy.",
     longDescription:
       "Most adventure luggage is designed by people who photograph riding rather than do it. The Trail Kit came from a clear brief: carry the things you'll actually reach for, organise them so you can find them wearing gloves, and survive conditions that would ruin lesser kit. The magnetic tank bag uses rare-earth magnets strong enough to hold through mountain passes but releases cleanly with one hand. The waxed canvas tool roll uses precision-cut pockets sized to specific tools, not generic slots.",
-    price: 18999,
+    price: 5000,
     category: "Utility",
     features: [
       {
@@ -183,7 +183,7 @@ export const products: Product[] = [
       "A dedicated motorcycle navigation unit that does one thing right: turn-by-turn navigation with a sunlight-readable 3.5\" display, 12-hour battery, and vibration-isolated mount. No social features. No distractions.",
     longDescription:
       "Phones fail as navigation devices on motorcycles for specific, solvable reasons: heat management failures, display glare, vibration damage to OIS cameras, and notification interruptions. The myto navi was designed to solve each problem without compromise. The 3.5\" IPS display runs at 800 nits — readable in direct Rajasthani sunlight. The vibration-isolated mount uses dual-axis dampening so the unit absorbs handlebar input rather than transmitting it to the screen. Offline maps mean you navigate in areas with no signal as naturally as in cities.",
-    price: 14999,
+    price: 11000,
     category: "Navigation",
     features: [
       {

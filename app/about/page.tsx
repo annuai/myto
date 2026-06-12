@@ -101,15 +101,6 @@ export default function AboutPage() {
         style={{ background: "var(--color-card-dark)" }}
       >
         <div className="container-wide py-24">
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-xs font-semibold uppercase tracking-widest mb-6"
-            style={{ color: "rgba(245,240,232,0.4)" }}
-          >
-            About myto-moto
-          </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -133,7 +124,7 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 2: Origin Story */}
-      <section className="py-24">
+      <section className="py-16">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <FadeUp>
@@ -187,7 +178,7 @@ export default function AboutPage() {
               <FadeUp key={card.title} delay={i * 0.07}>
                 <div
                   className="rounded-3xl p-8 h-full"
-                  style={{ background: card.bg, boxShadow: "var(--shadow-sm)" }}
+                  style={{ background: card.bg }}
                 >
                   <h3 className="display-sm mb-3">{card.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
@@ -201,7 +192,7 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 4: Process */}
-      <section className="py-24">
+      <section className="py-16">
         <div className="container-wide">
           <FadeUp className="mb-12">
             <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--color-muted)" }}>
@@ -214,7 +205,7 @@ export default function AboutPage() {
               <FadeUp key={step.n} delay={i * 0.07}>
                 <div
                   className="rounded-3xl p-7 h-full"
-                  style={{ background: "var(--color-card-cream)", boxShadow: "var(--shadow-sm)" }}
+                  style={{ background: "var(--color-card-cream)" }}
                 >
                   <span
                     className="text-xs font-mono font-bold block mb-4"
@@ -234,7 +225,7 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 5: Materials */}
-      <section className="py-24">
+      <section className="py-16">
         <div className="container-wide">
           <FadeUp className="mb-10">
             <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--color-muted)" }}>
@@ -244,7 +235,7 @@ export default function AboutPage() {
           </FadeUp>
           <div
             className="rounded-3xl overflow-hidden"
-            style={{ background: "var(--color-card-stone)", boxShadow: "var(--shadow-sm)" }}
+            style={{ background: "var(--color-card-stone)" }}
           >
             {materials.map((m, i) => (
               <FadeUp key={m.name} delay={i * 0.06}>
@@ -297,12 +288,12 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 7: Journal CTA */}
-      <section className="py-12 pb-0">
+      <section className="py-12">
         <div className="container-wide">
           <FadeUp>
             <div
               className="rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
-              style={{ background: "var(--color-card-cream)", boxShadow: "var(--shadow-sm)" }}
+              style={{ background: "var(--color-card-cream)" }}
             >
               <div>
                 <h3 className="display-sm mb-2">Read the journal</h3>
@@ -322,7 +313,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Footer className="" />
+      <Footer />
     </div>
   );
 }

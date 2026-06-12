@@ -1,0 +1,198 @@
+"use client";
+
+import { useRef } from "react";
+import Link from "next/link";
+import { motion, useInView } from "framer-motion";
+import { Footer } from "@/components/Footer";
+
+function FadeUp({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 22 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+const values = [
+  {
+    title: "Share what works",
+    description: "Routes, gear fixes, improvised repairs. Honest accounts from riders who've been there — no brand loyalty, no sponsored opinions.",
+  },
+  {
+    title: "Help first",
+    description: "When someone asks a question, the first response is the most useful answer available. Not a redirect. Not an upsell.",
+  },
+  {
+    title: "Ride seriously",
+    description: "We don't gatekeep by bike, budget, or kilometre count. We care about the intention to ride thoughtfully and share what you learn.",
+  },
+  {
+    title: "Fix things",
+    description: "Every myto product can be repaired on the road. Club members know how. The group is a running record of maintenance knowledge.",
+  },
+];
+
+export default function ClubPage() {
+  return (
+    <div style={{ background: "var(--color-background)" }}>
+      {/* Hero */}
+      <section
+        className="min-h-screen flex items-center pt-16"
+        style={{ background: "var(--color-card-dark)" }}
+      >
+        <div className="container-wide py-24">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-xs font-semibold uppercase tracking-widest mb-6"
+            style={{ color: "rgba(245,240,232,0.4)" }}
+          >
+            Community
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="display-xl mb-6 max-w-2xl"
+            style={{ color: "#f5f0e8" }}
+          >
+            Club Myto
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="text-lg max-w-lg leading-relaxed mb-4"
+            style={{ color: "rgba(245,240,232,0.55)" }}
+          >
+            A WhatsApp group for long-distance riders. Routes, repairs, real experience — shared by people who ride far enough to know that kit matters.
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.45 }}
+            className="text-sm mb-10"
+            style={{ color: "rgba(245,240,232,0.35)" }}
+          >
+            Currently a WhatsApp group. Expanding when the time is right.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.55 }}
+            className="flex flex-col sm:flex-row gap-3"
+          >
+            <a
+              href="mailto:clubmyto@gmail.com"
+              className="inline-flex items-center px-7 py-3.5 rounded-2xl text-sm font-semibold transition-all hover:opacity-90"
+              style={{ background: "var(--color-accent)", color: "#fff" }}
+            >
+              Request to join →
+            </a>
+            <Link
+              href="/journal"
+              className="inline-flex items-center px-7 py-3.5 rounded-2xl text-sm font-semibold transition-all hover:opacity-75"
+              style={{ color: "rgba(245,240,232,0.65)", border: "1px solid rgba(245,240,232,0.15)" }}
+            >
+              Read the journal
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section className="py-16">
+        <div className="container-wide">
+          <FadeUp>
+            <div className="rounded-3xl p-10 md:p-14" style={{ background: "var(--color-card-cream)" }}>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "var(--color-muted)" }}>
+                How it works
+              </p>
+              <h2 className="display-md mb-6 max-w-lg">A WhatsApp group, for now.</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
+                <div>
+                  <p className="font-semibold mb-2" style={{ color: "var(--color-foreground)" }}>01 — Email us</p>
+                  <p>Send a message to clubmyto@gmail.com. Tell us where you ride and what you ride. That's all we need.</p>
+                </div>
+                <div>
+                  <p className="font-semibold mb-2" style={{ color: "var(--color-foreground)" }}>02 — Get added</p>
+                  <p>We'll add you to the WhatsApp group. It's an active group — check in, share updates, ask questions.</p>
+                </div>
+                <div>
+                  <p className="font-semibold mb-2" style={{ color: "var(--color-foreground)" }}>03 — Shape the products</p>
+                  <p>Member feedback directly influences what we build. Every product in the range has been shaped by Club input.</p>
+                </div>
+              </div>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* Values */}
+      <section className="py-12">
+        <div className="container-wide">
+          <FadeUp className="mb-10">
+            <h2 className="display-md">What the group is built on.</h2>
+          </FadeUp>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {values.map((v, i) => (
+              <FadeUp key={v.title} delay={i * 0.07}>
+                <div
+                  className="rounded-3xl p-8 h-full"
+                  style={{ background: i % 2 === 0 ? "var(--color-card-stone)" : "var(--color-card-cream)" }}
+                >
+                  <h3 className="display-sm mb-3">{v.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
+                    {v.description}
+                  </p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-12">
+        <div className="container-wide">
+          <FadeUp>
+            <div className="rounded-3xl p-10 md:p-14" style={{ background: "var(--color-card-dark)" }}>
+              <h2 className="display-md mb-4 max-w-lg" style={{ color: "#f5f0e8" }}>
+                If you ride far, you belong here.
+              </h2>
+              <p className="text-base leading-relaxed max-w-lg mb-8" style={{ color: "rgba(245,240,232,0.55)" }}>
+                Email clubmyto@gmail.com to join. No questionnaire, no approval process — just tell us where you ride.
+              </p>
+              <a
+                href="mailto:clubmyto@gmail.com"
+                className="inline-flex items-center px-7 py-3.5 rounded-2xl text-sm font-semibold transition-all hover:opacity-90"
+                style={{ background: "var(--color-accent)", color: "#fff" }}
+              >
+                clubmyto@gmail.com →
+              </a>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

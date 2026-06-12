@@ -97,7 +97,7 @@ export default function HomePage() {
     <div style={{ background: "var(--color-background)" }}>
       {/* SECTION 1: Hero */}
       <section style={{ background: "var(--color-background)" }}>
-        <div className="container-wide pt-36 pb-10">
+        <div className="container-wide pt-24 md:pt-36 pb-10">
           {/* Text block */}
           <div className="max-w-xl">
             {/* <motion.p
@@ -163,8 +163,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-10 rounded-3xl overflow-hidden"
-            style={{ aspectRatio: "21/9" }}
+            className="mt-10 rounded-3xl overflow-hidden aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9]"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -177,7 +176,7 @@ export default function HomePage() {
       </section>
 
       {/* SECTION 2: Product Grid */}
-      <section className="py-24">
+      <section className="py-16">
         <div className="container-wide">
           <FadeUp className="mb-12">
             <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--color-muted)" }}>
@@ -190,16 +189,13 @@ export default function HomePage() {
               <FadeUp key={product.id} delay={i * 0.08}>
                 <Link href={`/products/${product.slug}`} className="block group h-full">
                   <div
-                    className="rounded-3xl p-8 flex flex-col h-full transition-all duration-300 group-hover:-translate-y-1"
-                    style={{
-                      background: cardBgs[i],
-
-                    }}
+                    className="rounded-3xl overflow-hidden flex flex-col h-full transition-all duration-300 group-hover:-translate-y-1"
+                    style={{ background: cardBgs[i] }}
                   >
-                    <div className="flex justify-center py-6">
-                      <ProductRender name={product.name} size="lg" />
+                    <div className="w-full h-56">
+                      <ProductRender name={product.name} size="fill" />
                     </div>
-                    <div className="mt-4">
+                    <div className="px-8 pb-8 pt-5">
                       <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--color-muted)" }}>
                         {product.category}
                       </p>
@@ -226,7 +222,7 @@ export default function HomePage() {
       </section>
 
       {/* SECTION 3: Why myto */}
-      <section className="py-24">
+      <section className="py-16">
         <div className="container-wide">
           <FadeUp className="mb-12">
             <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--color-muted)" }}>
@@ -309,7 +305,7 @@ export default function HomePage() {
       </section>
 
       {/* SECTION 5: Engineering Process */}
-      <section className="py-24">
+      <section className="py-16">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <FadeUp>
@@ -350,7 +346,7 @@ export default function HomePage() {
       </section>
 
       {/* SECTION 6: Journal Preview */}
-      <section className="py-24">
+      <section className="py-16">
         <div className="container-wide">
           <FadeUp className="flex items-end justify-between mb-10">
             <div>
@@ -457,8 +453,40 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 8: Newsletter */}
-      <section className="py-12 pb-0">
+      {/* SECTION 8: Club Myto Community */}
+      <section className="py-12">
+        <div className="container-wide">
+          <FadeUp>
+            <div
+              className="rounded-3xl p-10 md:p-16"
+              style={{ background: "var(--color-card-dark)" }}
+            >
+              <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "rgba(245,240,232,0.35)" }}>
+                Community
+              </p>
+              <h2 className="display-md mb-6 max-w-lg" style={{ color: "#f5f0e8" }}>
+                Club Myto
+              </h2>
+              <p className="text-base leading-relaxed max-w-xl mb-4" style={{ color: "rgba(245,240,232,0.6)" }}>
+                Built by riders, for riders. Club Myto is the community behind every product — a place for long-distance riders to share routes, maintenance knowledge, and the kind of hard-won experience that only comes from real distance.
+              </p>
+              <p className="text-base leading-relaxed max-w-xl mb-8" style={{ color: "rgba(245,240,232,0.6)" }}>
+                Every product in the range started as a problem someone on a real ride encountered. If you've ridden far enough to know that good kit matters, you're already one of us.
+              </p>
+              <a
+                href="mailto:clubmyto@gmail.com"
+                className="inline-flex items-center gap-2 text-sm font-semibold transition-opacity hover:opacity-75"
+                style={{ color: "var(--color-accent)" }}
+              >
+                Join the community →
+              </a>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* SECTION 9: Newsletter */}
+      <section className="py-12">
         <div className="container-wide">
           <FadeUp>
             <div

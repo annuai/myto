@@ -65,7 +65,7 @@ const faqs: Record<string, FAQItem[]> = {
   Orders: [
     { q: "How long does delivery take?", a: "We ship within 2 business days of receiving your order. Delivery typically takes 3–7 business days across India. We ship via premium courier with tracking." },
     { q: "Do you ship internationally?", a: "Not yet. We're working on international shipping and will announce when it's available. Sign up for the newsletter to be notified." },
-    { q: "Can I change or cancel my order?", a: "You can change or cancel your order within 24 hours of placing it by emailing hi.annuai@gmail.com with your order number." },
+    { q: "Can I change or cancel my order?", a: "You can change or cancel your order within 24 hours of placing it by emailing clubmyto@gmail.com with your order number." },
   ],
   Returns: [
     { q: "What is the return policy?", a: "We accept returns within 30 days of delivery. Products must be unused and in original packaging. Contact us to initiate a return and we'll arrange collection." },
@@ -79,7 +79,7 @@ const faqs: Record<string, FAQItem[]> = {
   ],
   Warranty: [
     { q: "What does the warranty cover?", a: "The 2-year warranty covers manufacturing defects, material failures, and workmanship issues under normal use. It doesn't cover damage from accidents, incorrect installation, or modifications." },
-    { q: "How do I make a warranty claim?", a: "Email hi.annuai@gmail.com with your order number, a description of the issue, and photographs. We aim to respond within 24 hours and resolve all warranty claims within 7 business days." },
+    { q: "How do I make a warranty claim?", a: "Email clubmyto@gmail.com with your order number, a description of the issue, and photographs. We aim to respond within 24 hours and resolve all warranty claims within 7 business days." },
     { q: "Does the warranty cover the myto navi battery?", a: "The battery is covered against manufacturing defects for 2 years. Normal capacity degradation over time is not covered, but the battery is user-replaceable and we stock replacements." },
   ],
 };
@@ -127,6 +127,23 @@ function Accordion({ group, items }: { group: string; items: FAQItem[] }) {
 }
 
 export default function SupportPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const allFAQs = Object.entries(faqs).flatMap(([group, items]) =>
+    items.map((item) => ({ ...item, group }))
+  );
+
+  const searchResults = searchQuery.trim()
+    ? allFAQs.filter(
+        (item) =>
+          item.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.a.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.group.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : [];
+
+  const showResults = searchQuery.trim().length > 0;
+
   return (
     <div style={{ background: "var(--color-background)" }}>
       {/* Header */}
@@ -137,10 +154,11 @@ export default function SupportPage() {
             <p className="text-base mb-8" style={{ color: "var(--color-muted)" }}>
               Product support, installation help, warranty, and contact.
             </p>
-            {/* Search (styled, non-functional) */}
             <div className="relative">
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for help..."
                 className="w-full px-6 py-4 rounded-2xl text-sm outline-none"
                 style={{
@@ -149,8 +167,55 @@ export default function SupportPage() {
                   color: "var(--color-foreground)",
                 }}
               />
+              {showResults && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-xs px-2 py-1 rounded-lg"
+                  style={{ color: "var(--color-muted)" }}
+                >
+                  Clear
+                </button>
+              )}
             </div>
           </FadeUp>
+
+          {/* Search results */}
+          {showResults && (
+            <div className="max-w-2xl mx-auto mt-6">
+              {searchResults.length > 0 ? (
+                <div className="space-y-3">
+                  <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "var(--color-muted)" }}>
+                    {searchResults.length} result{searchResults.length !== 1 ? "s" : ""}
+                  </p>
+                  {searchResults.map((item, i) => (
+                    <div
+                      key={i}
+                      className="rounded-2xl p-5"
+                      style={{ background: "var(--color-card-stone)" }}
+                    >
+                      <p className="text-xs font-semibold mb-1" style={{ color: "var(--color-accent)" }}>
+                        {item.group}
+                      </p>
+                      <p className="text-sm font-medium mb-2">{item.q}</p>
+                      <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
+                        {item.a}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-10">
+                  <p className="text-sm" style={{ color: "var(--color-muted)" }}>
+                    No results for &ldquo;{searchQuery}&rdquo;. Try different keywords or{" "}
+                    <a href="mailto:clubmyto@gmail.com" className="underline" style={{ color: "var(--color-accent)" }}>
+                      email us directly
+                    </a>
+                    .
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
@@ -167,7 +232,6 @@ export default function SupportPage() {
                   className="rounded-3xl p-6 h-full cursor-pointer transition-all duration-300 hover:-translate-y-0.5"
                   style={{
                     background: i % 2 === 0 ? "var(--color-card-cream)" : "var(--color-card-stone)",
-                    boxShadow: "var(--shadow-sm)",
                   }}
                 >
                   <div
@@ -198,7 +262,7 @@ export default function SupportPage() {
               <FadeUp key={hub.slug} delay={i * 0.07}>
                 <div
                   className="rounded-3xl p-8 h-full"
-                  style={{ background: "var(--color-card-cream)", boxShadow: "var(--shadow-sm)" }}
+                  style={{ background: "var(--color-card-cream)" }}
                 >
                   <h3 className="display-sm mb-3">{hub.name}</h3>
                   <p className="text-sm leading-relaxed mb-5" style={{ color: "var(--color-muted)" }}>
@@ -245,7 +309,7 @@ export default function SupportPage() {
       </section>
 
       {/* Contact card */}
-      <section className="py-12 pb-0">
+      <section className="py-12">
         <div className="container-wide">
           <FadeUp>
             <div
@@ -263,11 +327,11 @@ export default function SupportPage() {
                   <p className="text-sm mb-2" style={{ color: "rgba(245,240,232,0.55)" }}>
                     Email us at{" "}
                     <a
-                      href="mailto:hi.annuai@gmail.com"
+                      href="mailto:clubmyto@gmail.com"
                       className="font-medium transition-opacity hover:opacity-75"
                       style={{ color: "var(--color-accent)" }}
                     >
-                      hi.annuai@gmail.com
+                      clubmyto@gmail.com
                     </a>
                   </p>
                   <p className="text-xs" style={{ color: "rgba(245,240,232,0.35)" }}>
@@ -275,7 +339,7 @@ export default function SupportPage() {
                   </p>
                 </div>
                 <a
-                  href="mailto:hi.annuai@gmail.com"
+                  href="mailto:clubmyto@gmail.com"
                   className="inline-flex items-center px-7 py-3.5 rounded-2xl text-sm font-semibold transition-all hover:opacity-90 flex-shrink-0"
                   style={{ background: "var(--color-accent)", color: "#fff" }}
                 >

@@ -173,12 +173,6 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
                 >
                   {addedToCart ? "Added to cart ✓" : "Add to cart"}
                 </button>
-                <button
-                  className="inline-flex items-center px-6 py-4 rounded-2xl text-sm font-medium border transition-all hover:bg-black/5"
-                  style={{ borderColor: "rgba(0,0,0,0.12)", color: "var(--color-muted)" }}
-                >
-                  Add to wishlist
-                </button>
               </div>
             </motion.div>
 
@@ -191,7 +185,7 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
             >
               <div
                 className="w-full rounded-3xl flex items-center justify-center py-16"
-                style={{ background: "var(--color-card-cream)", boxShadow: "var(--shadow-md)" }}
+                style={{ background: "var(--color-card-cream)" }}
               >
                 <ProductRender name={product.name} size="xl" />
               </div>
@@ -236,7 +230,6 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
                       : i % 3 === 1
                       ? "var(--color-card-stone)"
                       : "var(--color-card-olive)",
-                    boxShadow: "var(--shadow-sm)",
                   }}
                 >
                   <span
@@ -264,7 +257,7 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
           </FadeUp>
           <div
             className="rounded-3xl p-8 md:p-12"
-            style={{ background: "var(--color-card-stone)", boxShadow: "var(--shadow-sm)" }}
+            style={{ background: "var(--color-card-stone)" }}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
               {engineeringSteps.map((step, i) => (
@@ -296,7 +289,7 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
               <h2 className="display-sm mb-6">Specifications</h2>
               <div
                 className="rounded-3xl overflow-hidden"
-                style={{ background: "var(--color-card-cream)", boxShadow: "var(--shadow-sm)" }}
+                style={{ background: "var(--color-card-cream)" }}
               >
                 {Object.entries(product.specs).map(([key, value], i) => (
                   <div
@@ -317,7 +310,7 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
                 <h2 className="display-sm mb-4">Materials</h2>
                 <div
                   className="rounded-3xl px-6 py-5 mb-6"
-                  style={{ background: "var(--color-card-olive)", boxShadow: "var(--shadow-sm)" }}
+                  style={{ background: "var(--color-card-olive)" }}
                 >
                   <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
                     {product.materials}
@@ -330,7 +323,7 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
                 <h2 className="display-sm mb-4">Ecosystem note</h2>
                 <div
                   className="rounded-3xl px-6 py-5 mb-6"
-                  style={{ background: "var(--color-card-clay)", boxShadow: "var(--shadow-sm)" }}
+                  style={{ background: "var(--color-card-clay)" }}
                 >
                   <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
                     {product.ecosystemNote}
@@ -342,7 +335,7 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
               <FadeUp delay={0.15}>
                 <div
                   className="rounded-3xl px-6 py-5"
-                  style={{ background: "var(--color-card-stone)", boxShadow: "var(--shadow-sm)" }}
+                  style={{ background: "var(--color-card-stone)" }}
                 >
                   <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "var(--color-muted)" }}>
                     Installation time
@@ -370,7 +363,6 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
                       className="rounded-3xl p-8 flex items-center gap-6 transition-all duration-300 group-hover:-translate-y-0.5"
                       style={{
                         background: i === 0 ? "var(--color-card-cream)" : "var(--color-card-stone)",
-                        boxShadow: "var(--shadow-sm)",
                       }}
                     >
                       <ProductRender name={rp.name} size="sm" />
@@ -401,7 +393,7 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
               <h2 className="display-sm mb-6">What&apos;s in the box</h2>
               <div
                 className="rounded-3xl overflow-hidden"
-                style={{ background: "var(--color-card-stone)", boxShadow: "var(--shadow-sm)" }}
+                style={{ background: "var(--color-card-stone)" }}
               >
                 {product.whatsInBox.map((item, i) => (
                   <div
@@ -488,7 +480,7 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
                 <FadeUp key={review.name} delay={i * 0.07}>
                   <div
                     className="rounded-3xl p-7 h-full"
-                    style={{ background: "var(--color-card-stone)", boxShadow: "var(--shadow-sm)" }}
+                    style={{ background: "var(--color-card-stone)" }}
                   >
                     <div className="flex gap-0.5 mb-4">
                       {Array.from({ length: review.stars }).map((_, j) => (
@@ -554,7 +546,7 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
       )}
 
       {/* SECTION 11: Final CTA */}
-      <section className="py-12 pb-0">
+      <section className="py-12">
         <div className="container-wide">
           <FadeUp>
             <div

@@ -8,67 +8,26 @@ export type Article = {
   author: string;
 };
 
+import { meta as m1, paragraphs as p1, pullQuote as pq1 } from "@/content/journal/designing-trail-beam-housing";
+import { meta as m2, paragraphs as p2, pullQuote as pq2 } from "@/content/journal/waxed-canvas-sourcing";
+import { meta as m3, paragraphs as p3, pullQuote as pq3 } from "@/content/journal/navigation-without-phone";
+import { meta as m4, paragraphs as p4, pullQuote as pq4 } from "@/content/journal/spiti-circuit-dispatch";
+import { meta as m5, paragraphs as p5, pullQuote as pq5 } from "@/content/journal/designing-for-repairability";
+import { meta as m6, paragraphs as p6, pullQuote as pq6 } from "@/content/journal/small-batch-manufacturing-india";
+
+function calcReadTime(paragraphs: string[], pullQuote: string): string {
+  const text = [...paragraphs, pullQuote].join(" ");
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  return `${Math.max(1, Math.ceil(words / 200))} min read`;
+}
+
 export const articles: Article[] = [
-  {
-    slug: "designing-trail-beam-housing",
-    title: "Shape Before Lumens: Designing the Trail Beam Housing",
-    excerpt:
-      "Most auxiliary lamp makers start with the LED specification. We started with the housing shape. Six months of CFD work before a single circuit board was drawn.",
-    date: "2025-11-20",
-    readTime: "9 min read",
-    category: "Engineering",
-    author: "Annuai",
-  },
-  {
-    slug: "waxed-canvas-sourcing",
-    title: "Finding the Right Canvas: A Material Sourcing Journey",
-    excerpt:
-      "We tested eleven waxed canvas fabrics before specifying the one in the Trail Kit tool roll. What we were looking for — and why most fell short.",
-    date: "2025-10-08",
-    readTime: "7 min read",
-    category: "Craft",
-    author: "Annuai",
-  },
-  {
-    slug: "navigation-without-phone",
-    title: "Why a Phone Is Still the Wrong Tool for Navigation",
-    excerpt:
-      "After riding 40,000km with a phone as primary navigation, we documented every failure mode. The list formed the brief for myto navi.",
-    date: "2025-09-14",
-    readTime: "11 min read",
-    category: "Research",
-    author: "Annuai",
-  },
-  {
-    slug: "spiti-circuit-dispatch",
-    title: "Spiti Circuit: Notes from 1,400km of High-Altitude Testing",
-    excerpt:
-      "Taking pre-production Trail Beam units into the Spiti Valley to see what altitude, cold, and sustained vibration do to assumptions made at sea level.",
-    date: "2025-08-02",
-    readTime: "14 min read",
-    category: "Riding",
-    author: "Annuai",
-  },
-  {
-    slug: "designing-for-repairability",
-    title: "Designed to Be Repaired",
-    excerpt:
-      "Every product we make can be disassembled with common tools. This isn't an afterthought — it is a design constraint we imposed before any sketching began.",
-    date: "2025-07-17",
-    readTime: "8 min read",
-    category: "Design",
-    author: "Annuai",
-  },
-  {
-    slug: "small-batch-manufacturing-india",
-    title: "Small-Batch Manufacturing in India: What We Learned",
-    excerpt:
-      "Finding suppliers who care about tolerances when your order quantities are in the hundreds rather than thousands is genuinely difficult. Here is what the search looked like.",
-    date: "2025-06-05",
-    readTime: "10 min read",
-    category: "Manufacturing",
-    author: "Annuai",
-  },
+  { ...m1, readTime: calcReadTime(p1, pq1) },
+  { ...m2, readTime: calcReadTime(p2, pq2) },
+  { ...m3, readTime: calcReadTime(p3, pq3) },
+  { ...m4, readTime: calcReadTime(p4, pq4) },
+  { ...m5, readTime: calcReadTime(p5, pq5) },
+  { ...m6, readTime: calcReadTime(p6, pq6) },
 ];
 
 export function getArticleBySlug(slug: string) {

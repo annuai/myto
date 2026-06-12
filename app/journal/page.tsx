@@ -77,7 +77,7 @@ export default function JournalPage() {
       </section>
 
       {/* Featured article */}
-      <section className="pb-16">
+      <section className="pb-12">
         <div className="container-wide">
           <FadeUp>
             <Link href={`/journal/${featured.slug}`} className="block group">
@@ -85,7 +85,6 @@ export default function JournalPage() {
                 className="rounded-3xl p-10 md:p-14 transition-all duration-300 group-hover:-translate-y-1"
                 style={{
                   background: categoryColors[featured.category] ?? "var(--color-card-stone)",
-                  boxShadow: "var(--shadow-sm)",
                 }}
               >
                 <div className="max-w-2xl">
@@ -164,7 +163,6 @@ export default function JournalPage() {
                     className="rounded-3xl p-8 flex flex-col h-full transition-all duration-300 group-hover:-translate-y-0.5"
                     style={{
                       background: categoryColors[article.category] ?? "var(--color-card-stone)",
-                      boxShadow: "var(--shadow-sm)",
                     }}
                   >
                     <div className="flex items-center gap-3 mb-5">
@@ -209,7 +207,7 @@ export default function JournalPage() {
       </section>
 
       {/* Newsletter */}
-      <section className="pb-0">
+      <section className="pb-12">
         <div className="container-wide">
           <FadeUp>
             <div

@@ -57,7 +57,6 @@ export function JournalPreview() {
                   className="rounded-3xl p-7 h-full transition-all duration-300 group-hover:-translate-y-0.5"
                   style={{
                     background: categoryColors[article.category] ?? "var(--color-card-stone)",
-                    boxShadow: "var(--shadow-sm)",
                   }}
                 >
                   <span

@@ -99,16 +99,15 @@ export default function ShopPage() {
               <FadeUp key={product.id} delay={i * 0.08}>
                 <Link href={`/products/${product.slug}`} className="block group h-full">
                   <div
-                    className="rounded-3xl p-8 flex flex-col h-full transition-all duration-300 group-hover:-translate-y-1"
+                    className="rounded-3xl overflow-hidden flex flex-col h-full transition-all duration-300 group-hover:-translate-y-1"
                     style={{
                       background: cardBgs[products.indexOf(product) % cardBgs.length],
-                      boxShadow: "var(--shadow-sm)",
                     }}
                   >
-                    <div className="flex justify-center py-8">
-                      <ProductRender name={product.name} size="lg" />
+                    <div className="w-full h-56">
+                      <ProductRender name={product.name} size="fill" />
                     </div>
-                    <div className="mt-2">
+                    <div className="px-8 pb-8 pt-5 mt-0">
                       <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--color-muted)" }}>
                         {product.category}
                       </p>
@@ -139,7 +138,7 @@ export default function ShopPage() {
         </div>
       </section>
 
-      <Footer className="" />
+      <Footer />
     </div>
   );
 }
