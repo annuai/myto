@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { products } from "@/lib/products";
 import { formatPrice } from "@/lib/format";
+import { preOrderPrice } from "@/context/CartContext";
 import { ProductRender } from "@/components/ProductRender";
 import { Footer } from "@/components/Footer";
 
@@ -116,7 +117,20 @@ export default function ShopPage() {
                         {product.tagline}
                       </p>
                       <div className="flex items-center justify-between pt-4 border-t" style={{ borderColor: "rgba(0,0,0,0.07)" }}>
-                        <span className="font-bold text-base">{formatPrice(product.price)}</span>
+                        <div>
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <span className="font-bold text-base">{formatPrice(product.price)}</span>
+                            <span
+                              className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-md"
+                              style={{ background: "var(--color-accent)", color: "#fff" }}
+                            >
+                              Pre-order
+                            </span>
+                          </div>
+                          <p className="text-xs" style={{ color: "var(--color-muted)" }}>
+                            {formatPrice(preOrderPrice(product.price))} with 20% off
+                          </p>
+                        </div>
                         <span
                           className="text-sm font-semibold px-4 py-2 rounded-xl transition-all group-hover:bg-[var(--color-accent)] group-hover:text-white"
                           style={{ background: "rgba(0,0,0,0.06)", color: "var(--color-foreground)" }}

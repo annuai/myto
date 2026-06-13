@@ -17,6 +17,7 @@ export type Product = {
   reviewCount?: number;
   rating?: number;
   inStock?: boolean;
+  preOrderSeats: number;
 };
 
 export const products: Product[] = [
@@ -99,6 +100,7 @@ export const products: Product[] = [
     materials: "Die-cast aluminium housing, polycarbonate lens, stainless steel hardware, silicone gaskets",
     ecosystemNote:
       "Pairs directly with Navi for integrated lighting triggers. The Trail Beam harness includes a signal output compatible with the navi's accessory port.",
+    preOrderSeats: 100,
   },
   {
     id: "p2",
@@ -173,6 +175,7 @@ export const products: Product[] = [
     materials: "600D polyester, PU-coated ripstop, waxed cotton canvas, N52 rare-earth magnets, YKK zippers, aluminium hardware",
     ecosystemNote:
       "Designed to carry the Trail Beam harness cleanly and route cables through the base grommet. The map pocket aligns with Navi's mount position on most handlebars.",
+    preOrderSeats: 100,
   },
   {
     id: "p3",
@@ -251,6 +254,7 @@ export const products: Product[] = [
     materials: "Polycarbonate housing with aluminium reinforcement, IPS display, silicone vibration dampers, stainless hardware",
     ecosystemNote:
       "The Navi accessory port connects to the Trail Beam harness signal output for automatic light control. Works with Trail Kit for integrated handlebar-area organisation.",
+    preOrderSeats: 100,
   },
 ];
 

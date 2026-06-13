@@ -52,69 +52,45 @@ export default function ClubPage() {
   return (
     <div style={{ background: "var(--color-background)" }}>
       {/* Hero */}
-      <section
-        className="min-h-screen flex items-center pt-16"
-        style={{ background: "var(--color-card-dark)" }}
-      >
-        <div className="container-wide py-24">
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-xs font-semibold uppercase tracking-widest mb-6"
-            style={{ color: "rgba(245,240,232,0.4)" }}
-          >
-            Community
-          </motion.p>
-          <motion.h1
+      <section className="pt-32 pb-12">
+        <div className="container-wide">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="display-xl mb-6 max-w-2xl"
-            style={{ color: "#f5f0e8" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="rounded-3xl p-10 md:p-14"
+            style={{ background: "var(--color-card-dark)" }}
           >
-            Club Myto
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="text-lg max-w-lg leading-relaxed mb-4"
-            style={{ color: "rgba(245,240,232,0.55)" }}
-          >
-            A WhatsApp group for long-distance riders. Routes, repairs, real experience — shared by people who ride far enough to know that kit matters.
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.45 }}
-            className="text-sm mb-10"
-            style={{ color: "rgba(245,240,232,0.35)" }}
-          >
-            Currently a WhatsApp group. Expanding when the time is right.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.55 }}
-            className="flex flex-col sm:flex-row gap-3"
-          >
-            <a
-              href="https://chat.whatsapp.com/EsdxZquNyIICasiv7HPVoz?mode=gi_t"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-7 py-3.5 rounded-2xl text-sm font-semibold transition-all hover:opacity-90"
-              style={{ background: "var(--color-accent)", color: "#fff" }}
-            >
-              Join on WhatsApp →
-            </a>
-            <Link
-              href="/journal"
-              className="inline-flex items-center px-7 py-3.5 rounded-2xl text-sm font-semibold transition-all hover:opacity-75"
-              style={{ color: "rgba(245,240,232,0.65)", border: "1px solid rgba(245,240,232,0.15)" }}
-            >
-              Read the journal
-            </Link>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-6" style={{ color: "rgba(245,240,232,0.35)" }}>
+              Community
+            </p>
+            <h1 className="display-xl mb-6 max-w-2xl" style={{ color: "#f5f0e8" }}>
+              Club Myto
+            </h1>
+            <p className="text-lg max-w-lg leading-relaxed mb-2" style={{ color: "rgba(245,240,232,0.55)" }}>
+              A WhatsApp group for long-distance riders. Routes, repairs, real experience — shared by people who ride far enough to know that kit matters.
+            </p>
+            <p className="text-sm mb-10" style={{ color: "rgba(245,240,232,0.35)" }}>
+              Currently a WhatsApp group. Expanding when the time is right.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href="https://chat.whatsapp.com/EsdxZquNyIICasiv7HPVoz?mode=gi_t"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-7 py-3.5 rounded-2xl text-sm font-semibold transition-all hover:opacity-90"
+                style={{ background: "var(--color-accent)", color: "#fff" }}
+              >
+                Join on WhatsApp →
+              </a>
+              <Link
+                href="/journal"
+                className="inline-flex items-center px-7 py-3.5 rounded-2xl text-sm font-semibold transition-all hover:opacity-75"
+                style={{ color: "rgba(245,240,232,0.65)", border: "1px solid rgba(245,240,232,0.15)" }}
+              >
+                Read the journal
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>

@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { Star, CheckCircle, ChevronDown } from "lucide-react";
 import { ProductRender } from "@/components/ProductRender";
 import { Footer } from "@/components/Footer";
 import { formatPrice } from "@/lib/format";
-import { useCart } from "@/context/CartContext";
+import { useCart, preOrderPrice } from "@/context/CartContext";
 import type { Product } from "@/lib/products";
 
 function FadeUp({
@@ -106,18 +106,34 @@ interface ProductPageProps {
 
 export function ProductPage({ product, relatedProducts }: ProductPageProps) {
   const { addItem } = useCart();
-  const [addedToCart, setAddedToCart] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [openCompat, setOpenCompat] = useState<number | null>(null);
+
+  // Pre-order seats (persisted in localStorage)
+  const PRE_ORDER_TOTAL = product.preOrderSeats;
+  const defaultRemaining = Math.floor(PRE_ORDER_TOTAL * 0.87); // start at 87 claimed
+  const [seatsRemaining, setSeatsRemaining] = useState(defaultRemaining);
+  const [addedPreOrder, setAddedPreOrder] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(`preorder-seats-${product.id}`);
+    if (stored !== null) setSeatsRemaining(Math.max(0, parseInt(stored, 10)));
+  }, [product.id]);
 
   const reviews = reviewsBySlug[product.slug] ?? [];
   const faqs = faqsBySlug[product.slug] ?? [];
   const compatibility = compatibilityBySlug[product.slug] ?? [];
 
-  function handleAddToCart() {
-    addItem(product);
-    setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 2500);
+  function handlePreOrder() {
+    if (seatsRemaining <= 0) return;
+    addItem(product, true);
+    setSeatsRemaining((prev) => {
+      const next = Math.max(0, prev - 1);
+      localStorage.setItem(`preorder-seats-${product.id}`, String(next));
+      return next;
+    });
+    setAddedPreOrder(true);
+    setTimeout(() => setAddedPreOrder(false), 2500);
   }
 
   const engineeringSteps = [
@@ -148,10 +164,76 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
               <p className="text-base mb-6 leading-relaxed" style={{ color: "var(--color-muted)" }}>
                 {product.tagline}
               </p>
-              <p className="text-3xl font-bold mb-8">{formatPrice(product.price)}</p>
+              <p className="text-3xl font-bold mb-6">{formatPrice(product.price)}</p>
+
+              {/* Pre-order panel */}
+              <div
+                className="rounded-2xl p-5 mb-6 border"
+                style={{ background: "var(--color-card-cream)", borderColor: "rgba(0,0,0,0.07)" }}
+              >
+                {/* Header */}
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-md"
+                      style={{ background: "var(--color-accent)", color: "#fff" }}
+                    >
+                      Pre-order
+                    </span>
+                    <span className="text-xs font-medium" style={{ color: "var(--color-muted)" }}>
+                      20% early access discount
+                    </span>
+                  </div>
+                </div>
+
+                {/* Discounted price */}
+                <div className="flex items-baseline gap-2 mb-4">
+                  <span className="text-2xl font-bold">{formatPrice(preOrderPrice(product.price))}</span>
+                  <span className="text-sm line-through" style={{ color: "var(--color-muted)" }}>
+                    {formatPrice(product.price)}
+                  </span>
+                </div>
+
+                {/* Seats progress */}
+                <div className="mb-4">
+                  <div className="flex justify-between items-center mb-1.5">
+                    <span className="text-xs font-medium">
+                      {seatsRemaining} of {PRE_ORDER_TOTAL} spots remaining
+                    </span>
+                    {seatsRemaining < 20 && (
+                      <span className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: "var(--color-accent)" }}>
+                        Almost gone
+                      </span>
+                    )}
+                  </div>
+                  <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(0,0,0,0.08)" }}>
+                    <div
+                      className="h-full rounded-full transition-all duration-500"
+                      style={{
+                        width: `${(seatsRemaining / PRE_ORDER_TOTAL) * 100}%`,
+                        background: seatsRemaining < 20 ? "var(--color-accent)" : "var(--color-foreground)",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Pre-order button */}
+                <button
+                  onClick={handlePreOrder}
+                  disabled={seatsRemaining === 0}
+                  className="w-full py-3 rounded-xl text-sm font-bold transition-all hover:opacity-90 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed"
+                  style={{ background: "var(--color-foreground)", color: "#f5f0e8" }}
+                >
+                  {seatsRemaining === 0
+                    ? "Pre-order sold out"
+                    : addedPreOrder
+                    ? "Pre-order added ✓"
+                    : `Pre-order · ${formatPrice(preOrderPrice(product.price))}`}
+                </button>
+              </div>
 
               {/* Trust chips */}
-              <div className="flex flex-wrap gap-2 mb-8">
+              <div className="flex flex-wrap gap-2 mb-6">
                 {["Free shipping", "2-year warranty", "30-day returns"].map((chip) => (
                   <span
                     key={chip}
@@ -164,16 +246,6 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
                 ))}
               </div>
 
-              {/* CTAs */}
-              <div className="flex flex-wrap gap-3">
-                <button
-                  onClick={handleAddToCart}
-                  className="inline-flex items-center px-8 py-4 rounded-2xl text-sm font-bold transition-all hover:opacity-90 active:scale-[0.97]"
-                  style={{ background: addedToCart ? "#2d6a4f" : "var(--color-accent)", color: "#fff" }}
-                >
-                  {addedToCart ? "Added to cart ✓" : "Add to cart"}
-                </button>
-              </div>
             </motion.div>
 
             {/* Right: Product render */}
@@ -560,16 +632,26 @@ export function ProductPage({ product, relatedProducts }: ProductPageProps) {
                 <h2 className="display-md mb-2" style={{ color: "#f5f0e8" }}>
                   Ready for the road?
                 </h2>
-                <p className="text-2xl font-bold" style={{ color: "rgba(245,240,232,0.7)" }}>
-                  {formatPrice(product.price)}
-                </p>
+                <div className="flex items-baseline gap-2">
+                  <p className="text-2xl font-bold" style={{ color: "#f5f0e8" }}>
+                    {formatPrice(preOrderPrice(product.price))}
+                  </p>
+                  <p className="text-base line-through" style={{ color: "rgba(245,240,232,0.4)" }}>
+                    {formatPrice(product.price)}
+                  </p>
+                </div>
               </div>
               <button
-                onClick={handleAddToCart}
-                className="inline-flex items-center px-8 py-4 rounded-2xl text-sm font-bold transition-all hover:opacity-90 active:scale-[0.97] flex-shrink-0"
-                style={{ background: addedToCart ? "#2d6a4f" : "var(--color-accent)", color: "#fff" }}
+                onClick={handlePreOrder}
+                disabled={seatsRemaining === 0}
+                className="inline-flex items-center px-8 py-4 rounded-2xl text-sm font-bold transition-all hover:opacity-90 active:scale-[0.97] flex-shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ background: "var(--color-accent)", color: "#fff" }}
               >
-                {addedToCart ? "Added to cart ✓" : "Add to cart"}
+                {seatsRemaining === 0
+                  ? "Pre-order sold out"
+                  : addedPreOrder
+                  ? "Pre-order added ✓"
+                  : `Pre-order · ${formatPrice(preOrderPrice(product.price))}`}
               </button>
             </div>
           </FadeUp>

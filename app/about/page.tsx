@@ -96,30 +96,26 @@ export default function AboutPage() {
   return (
     <div style={{ background: "var(--color-background)" }}>
       {/* SECTION 1: Hero */}
-      <section
-        className="min-h-screen flex items-center pt-16"
-        style={{ background: "var(--color-card-dark)" }}
-      >
-        <div className="container-wide py-24">
-          <motion.h1
+      <section className="pt-32 pb-12">
+        <div className="container-wide">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="display-xl mb-8 max-w-3xl"
-            style={{ color: "#f5f0e8" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="rounded-3xl p-10 md:p-14"
+            style={{ background: "var(--color-card-dark)" }}
           >
-            Built from what was missing.
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="text-lg max-w-xl leading-relaxed"
-            style={{ color: "rgba(245,240,232,0.55)" }}
-          >
-            Every product here started as a frustration on a long ride. Not a business
-            opportunity — a real problem without a good solution.
-          </motion.p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-6" style={{ color: "rgba(245,240,232,0.35)" }}>
+              About
+            </p>
+            <h1 className="display-xl mb-8 max-w-3xl" style={{ color: "#f5f0e8" }}>
+              Built from what was missing.
+            </h1>
+            <p className="text-lg max-w-xl leading-relaxed" style={{ color: "rgba(245,240,232,0.55)" }}>
+              Every product here started as a frustration on a long ride. Not a business
+              opportunity — a real problem without a good solution.
+            </p>
+          </motion.div>
         </div>
       </section>
 

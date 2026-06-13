@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { ShoppingBag, Menu, X, Search } from "lucide-react";
+import { ShoppingBag, Menu, X, Search, User } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { CartDrawer } from "./CartDrawer";
 import { motion, AnimatePresence } from "framer-motion";
 import { filterItems } from "@/lib/search-items";
+import { createSupabaseBrowserClient } from "@/lib/supabase-browser";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 const navLinks = [
   { label: "Products", href: "/shop" },
@@ -22,9 +24,22 @@ export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSearch, setMobileSearch] = useState("");
+  const [authUser, setAuthUser] = useState<SupabaseUser | null>(null);
   const { itemCount, toggleCart } = useCart();
   const pathname = usePathname();
   const router = useRouter();
+
+  // Subscribe to Supabase auth state
+  useEffect(() => {
+    const supabase = createSupabaseBrowserClient();
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setAuthUser(session?.user ?? null);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_, session) => setAuthUser(session?.user ?? null)
+    );
+    return () => subscription.unsubscribe();
+  }, []);
 
   const isHeroPage = pathname === "/";
 
@@ -40,13 +55,16 @@ export function Navigation() {
   }, [pathname]);
 
   // Pages with a dark hero need inverted (white) nav until the pill kicks in.
-  const darkHeroPage = pathname === "/about" || pathname === "/club";
+  const darkHeroPage = false;
 
   // When scrolled: floating pill. When at top: edge-to-edge transparent bar.
   const floatingPill = scrolled && !mobileOpen;
 
   // Background is white whenever floatingPill OR mobileOpen — both need dark text/logo.
   const invertNav = darkHeroPage && !floatingPill && !mobileOpen;
+
+  // Don't render the public nav inside the admin panel
+  if (pathname.startsWith("/admin")) return null;
 
   return (
     <>
@@ -58,7 +76,7 @@ export function Navigation() {
           style={{ maxWidth: floatingPill ? 1400 : "none" }}
           animate={
             floatingPill
-              ? { marginTop: 12, paddingLeft: 32, paddingRight: 32 }
+              ? { marginTop: 20, paddingLeft: 32, paddingRight: 32 }
               : { marginTop: 0, paddingLeft: 0, paddingRight: 0 }
           }
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
@@ -85,7 +103,7 @@ export function Navigation() {
             <div className={floatingPill ? "" : "container-wide"}>
               <div className="flex items-center justify-between h-14" style={floatingPill ? { paddingLeft: 20, paddingRight: 20 } : {}}>
                 <Link href="/" className="flex items-center">
-                  <div className="relative h-6 w-20">
+                  <div className="relative h-[34px] w-[72px]">
                     <Image
                       src="/myto-logo.svg"
                       alt="myto-moto"
@@ -141,6 +159,43 @@ export function Navigation() {
                       ⌘K
                     </kbd>
                   </button>
+                  {/* Auth — desktop only */}
+                  <div className="hidden md:flex items-center gap-0.5">
+                    {authUser ? (
+                      <>
+                        <Link
+                          href="/account/orders"
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-colors hover:bg-black/5"
+                          style={{ color: invertNav ? "rgba(245,240,232,0.65)" : "var(--color-muted)" }}
+                        >
+                          <User size={13} />
+                          Orders
+                        </Link>
+                        <button
+                          onClick={async () => {
+                            const { createSupabaseBrowserClient } = await import("@/lib/supabase-browser");
+                            await createSupabaseBrowserClient().auth.signOut();
+                            router.refresh();
+                          }}
+                          className="px-3 py-1.5 rounded-xl text-xs font-medium transition-colors hover:bg-black/5"
+                          style={{ color: invertNav ? "rgba(245,240,232,0.45)" : "var(--color-muted)" }}
+                        >
+                          Sign out
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          href="/account/login"
+                          className="px-3 py-1.5 rounded-xl text-xs font-medium transition-colors hover:bg-black/5"
+                          style={{ color: invertNav ? "rgba(245,240,232,0.65)" : "var(--color-muted)" }}
+                        >
+                          Sign in
+                        </Link>
+                      </>
+                    )}
+                  </div>
+
                   <button
                     onClick={toggleCart}
                     className="relative p-2 rounded-xl transition-colors hover:bg-white/10"

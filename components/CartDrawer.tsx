@@ -4,7 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X, Minus, Plus, ShoppingBag } from "lucide-react";
 import { formatPrice } from "@/lib/format";
 import Link from "next/link";
-import { useCart } from "@/context/CartContext";
+import { useCart, preOrderPrice } from "@/context/CartContext";
+import { ProductRender } from "@/components/ProductRender";
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, updateQty, total } = useCart();
@@ -79,52 +80,72 @@ export function CartDrawer() {
                 </div>
               ) : (
                 <ul className="flex flex-col gap-4">
-                  {items.map(({ product, quantity }) => (
-                    <li
-                      key={product.id}
-                      className="flex gap-4 p-4 rounded-2xl"
-                      style={{ background: "var(--color-card-stone)" }}
-                    >
-                      <div
-                        className="w-16 h-16 rounded-xl flex-shrink-0 flex items-center justify-center"
-                        style={{ background: "var(--color-card-cream)" }}
+                  {items.map(({ product, quantity, isPreOrder }) => {
+                    const displayPrice = isPreOrder
+                      ? preOrderPrice(product.price)
+                      : product.price;
+                    return (
+                      <li
+                        key={`${product.id}-${isPreOrder ? "pre" : "reg"}`}
+                        className="flex gap-4 p-4 rounded-2xl"
+                        style={{ background: "var(--color-card-stone)" }}
                       >
-                        <span className="text-xs text-center px-1 leading-tight" style={{ color: "var(--color-muted)" }}>
-                          {product.name}
-                        </span>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium leading-tight">{product.name}</p>
-                        <p className="text-sm mt-0.5 font-semibold" style={{ color: "var(--color-accent)" }}>
-                          {formatPrice(product.price)}
-                        </p>
-                        <div className="flex items-center gap-2 mt-2.5">
-                          <button
-                            onClick={() => updateQty(product.id, quantity - 1)}
-                            className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors hover:bg-black/10"
-                            style={{ background: "var(--color-card-cream)" }}
-                          >
-                            <Minus size={11} />
-                          </button>
-                          <span className="text-sm font-semibold w-5 text-center">{quantity}</span>
-                          <button
-                            onClick={() => updateQty(product.id, quantity + 1)}
-                            className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors hover:bg-black/10"
-                            style={{ background: "var(--color-card-cream)" }}
-                          >
-                            <Plus size={11} />
-                          </button>
-                          <button
-                            onClick={() => removeItem(product.id)}
-                            className="ml-auto text-xs transition-opacity hover:opacity-60"
-                            style={{ color: "var(--color-muted)" }}
-                          >
-                            Remove
-                          </button>
+                        <div
+                          className="w-16 h-16 rounded-xl flex-shrink-0 overflow-hidden flex items-center justify-center"
+                          style={{ background: "var(--color-card-cream)" }}
+                        >
+                          <ProductRender name={product.name} size="sm" />
                         </div>
-                      </div>
-                    </li>
-                  ))}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <p className="text-sm font-medium leading-tight">{product.name}</p>
+                            {isPreOrder && (
+                              <span
+                                className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-md flex-shrink-0"
+                                style={{ background: "var(--color-accent)", color: "#fff" }}
+                              >
+                                Pre-order
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-baseline gap-2">
+                            <p className="text-sm font-semibold" style={{ color: "var(--color-accent)" }}>
+                              {formatPrice(displayPrice)}
+                            </p>
+                            {isPreOrder && (
+                              <p className="text-xs line-through" style={{ color: "var(--color-muted)" }}>
+                                {formatPrice(product.price)}
+                              </p>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2 mt-2.5">
+                            <button
+                              onClick={() => updateQty(product.id, isPreOrder, quantity - 1)}
+                              className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors hover:bg-black/10"
+                              style={{ background: "var(--color-card-cream)" }}
+                            >
+                              <Minus size={11} />
+                            </button>
+                            <span className="text-sm font-semibold w-5 text-center">{quantity}</span>
+                            <button
+                              onClick={() => updateQty(product.id, isPreOrder, quantity + 1)}
+                              className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors hover:bg-black/10"
+                              style={{ background: "var(--color-card-cream)" }}
+                            >
+                              <Plus size={11} />
+                            </button>
+                            <button
+                              onClick={() => removeItem(product.id, isPreOrder)}
+                              className="ml-auto text-xs transition-opacity hover:opacity-60"
+                              style={{ color: "var(--color-muted)" }}
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </div>
@@ -141,12 +162,14 @@ export function CartDrawer() {
                   </span>
                   <span className="font-bold text-base">{formatPrice(total)}</span>
                 </div>
-                <button
-                  className="w-full py-3.5 rounded-2xl text-sm font-semibold text-white transition-all hover:opacity-90 active:scale-[0.98]"
+                <Link
+                  href="/checkout"
+                  onClick={closeCart}
+                  className="block w-full py-3.5 rounded-2xl text-sm font-semibold text-white text-center transition-all hover:opacity-90 active:scale-[0.98]"
                   style={{ background: "var(--color-accent)" }}
                 >
-                  Checkout
-                </button>
+                  Proceed to checkout →
+                </Link>
                 <p className="text-center text-xs mt-3" style={{ color: "var(--color-muted)" }}>
                   Free shipping on all orders above ₹1,999
                 </p>

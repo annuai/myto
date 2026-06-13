@@ -1,20 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useActionState } from "react";
+import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { subscribeNewsletter } from "@/app/actions/newsletter";
 
 export function Newsletter() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) setSubmitted(true);
-  };
+  const [state, action, pending] = useActionState(subscribeNewsletter, {
+    error: null,
+    success: false,
+  });
 
   return (
     <section ref={ref} className="py-16 md:py-20">
@@ -37,7 +36,7 @@ export function Newsletter() {
             No noise. Unsubscribe anytime.
           </p>
 
-          {submitted ? (
+          {state.success ? (
             <motion.p
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -51,11 +50,10 @@ export function Newsletter() {
               You&apos;re in. We&apos;ll be in touch.
             </motion.p>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <form action={action} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
                 placeholder="Your email address"
                 required
                 className="flex-1 px-4 py-3.5 rounded-lg text-sm outline-none transition-all"
@@ -67,12 +65,19 @@ export function Newsletter() {
               />
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90 active:scale-[0.98] whitespace-nowrap"
+                disabled={pending}
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90 active:scale-[0.98] whitespace-nowrap disabled:opacity-60"
                 style={{ background: "var(--color-accent)" }}
               >
-                Subscribe <ArrowRight size={14} />
+                {pending ? "Subscribing…" : <>Subscribe <ArrowRight size={14} /></>}
               </button>
             </form>
+          )}
+
+          {state.error && (
+            <p className="mt-3 text-xs" style={{ color: "var(--color-accent)" }}>
+              {state.error}
+            </p>
           )}
         </motion.div>
       </div>
