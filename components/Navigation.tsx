@@ -100,7 +100,7 @@ export function Navigation() {
           >
             <div className={floatingPill ? "" : "container-wide"}>
               <div
-                className="flex items-center justify-between h-14"
+                className="relative flex items-center justify-between h-14"
                 style={floatingPill ? { paddingLeft: 20, paddingRight: 20 } : {}}
               >
                 {/* Logo */}
@@ -117,8 +117,8 @@ export function Navigation() {
                   </div>
                 </Link>
 
-                {/* Desktop nav */}
-                <nav className="hidden md:flex items-center gap-7">
+                {/* Desktop nav — absolutely centred so it sits at the true midpoint */}
+                <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-7">
                   {navLinks.map((link) => (
                     <Link
                       key={link.href}

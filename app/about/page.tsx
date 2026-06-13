@@ -132,9 +132,9 @@ export default function AboutPage() {
             <FadeUp delay={0.1}>
               <div className="space-y-5 text-base leading-relaxed" style={{ color: "var(--color-muted)" }}>
                 <p>
-                  I started riding long-distance in 2019 — Rajasthan, Ladakh, the northeastern
-                  states. The kind of routes where you&apos;re genuinely far from help and the kit
-                  you carry matters.
+                  I started riding long-distance in 2023 — Rajasthan, Ladakh, an India tour
+                  through northern states. The kind of routes where you&apos;re genuinely far from
+                  help and the kit you carry matters.
                 </p>
                 <p>
                   What I found consistently was that the accessories available were designed by
