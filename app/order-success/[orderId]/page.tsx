@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { CheckCircle, Package, Mail, UserCheck } from "lucide-react";
+import { CheckCircle, Package, Mail, UserCheck, ShieldAlert } from "lucide-react";
 import { createAdminClient } from "@/lib/supabase";
 import { createSupabaseServerClient } from "@/lib/supabase-server-client";
 import { formatPaise } from "@/lib/order-utils";
@@ -8,6 +8,8 @@ import { Footer } from "@/components/Footer";
 import type { DBOrderWithItems } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
+
+type AccountStatus = "none" | "unverified" | "verified";
 
 async function getOrder(orderId: string): Promise<DBOrderWithItems | null> {
   const supabase = createAdminClient();
@@ -18,6 +20,14 @@ async function getOrder(orderId: string): Promise<DBOrderWithItems | null> {
     .eq("payment_status", "paid")
     .single();
   return data as DBOrderWithItems | null;
+}
+
+async function getAccountStatus(email: string): Promise<AccountStatus> {
+  const admin = createAdminClient();
+  const { data } = await admin.rpc("get_account_verification_status", {
+    p_email: email,
+  });
+  return (data as AccountStatus) ?? "none";
 }
 
 export default async function OrderSuccessPage({
@@ -34,10 +44,16 @@ export default async function OrderSuccessPage({
 
   if (!order) notFound();
 
-  const { data: { user } } = await supabase.auth.getUser();
-  const isSignedIn = !!user;
-  const isTheirOrder = isSignedIn &&
+  const [{ data: { user } }, accountStatus] = await Promise.all([
+    supabase.auth.getUser(),
+    getAccountStatus(order.customer_email),
+  ]);
+
+  // Is the current session the owner of this order?
+  const isTheirSession =
+    !!user &&
     user.email?.toLowerCase() === order.customer_email.toLowerCase();
+  const isConfirmed = isTheirSession && !!user?.email_confirmed_at;
 
   return (
     <div
@@ -77,42 +93,111 @@ export default async function OrderSuccessPage({
           </p>
         </div>
 
-        {/* Account status card */}
-        <div
-          className="rounded-3xl p-6 mb-6 flex items-start gap-4"
-          style={{ background: "var(--color-card-cream)" }}
-        >
+        {/* ── Account / email cards ─────────────────────────────────── */}
+
+        {isConfirmed ? (
+          /* ── Verified + signed in → clean card, no verification noise ── */
           <div
-            className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center mt-0.5"
-            style={{ background: isTheirOrder ? "rgba(45,106,79,0.12)" : "rgba(190,58,35,0.08)" }}
+            className="rounded-3xl p-6 mb-6 flex items-start gap-4"
+            style={{ background: "var(--color-card-cream)" }}
           >
-            <UserCheck
-              size={16}
-              style={{ color: isTheirOrder ? "#2d6a4f" : "var(--color-accent)" }}
-            />
+            <div
+              className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center mt-0.5"
+              style={{ background: "rgba(45,106,79,0.12)" }}
+            >
+              <UserCheck size={16} style={{ color: "#2d6a4f" }} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold mb-0.5">Order details emailed</p>
+              <p className="text-xs mb-3" style={{ color: "var(--color-muted)" }}>
+                A confirmation has been sent to{" "}
+                <strong>{order.customer_email}</strong>. You can also track this
+                order any time from your account.
+              </p>
+              <Link
+                href="/account/orders"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity hover:opacity-70"
+                style={{ color: "var(--color-accent)" }}
+              >
+                View my orders →
+              </Link>
+            </div>
           </div>
-          <div className="flex-1 min-w-0">
-            {isTheirOrder ? (
-              <>
-                <p className="text-sm font-semibold mb-0.5">You&apos;re signed in</p>
-                <p className="text-xs mb-3" style={{ color: "var(--color-muted)" }}>
-                  This order is linked to your account. You can track it any time from your orders page.
+
+        ) : accountStatus === "verified" ? (
+          /* ── Verified account, not currently signed in ── */
+          <div
+            className="rounded-3xl p-6 mb-6 flex items-start gap-4"
+            style={{ background: "var(--color-card-cream)" }}
+          >
+            <div
+              className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center mt-0.5"
+              style={{ background: "rgba(45,106,79,0.12)" }}
+            >
+              <Mail size={16} style={{ color: "#2d6a4f" }} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold mb-0.5">Order details emailed</p>
+              <p className="text-xs mb-3" style={{ color: "var(--color-muted)" }}>
+                A confirmation has been sent to{" "}
+                <strong>{order.customer_email}</strong>.
+              </p>
+              <Link
+                href={`/account/login?email=${encodeURIComponent(order.customer_email)}`}
+                className="inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity hover:opacity-70"
+                style={{ color: "var(--color-accent)" }}
+              >
+                Sign in to track this order →
+              </Link>
+            </div>
+          </div>
+
+        ) : (
+          /* ── Unverified or new account → two separate cards ── */
+          <div className="space-y-3 mb-6">
+            {/* Card 1: order email */}
+            <div
+              className="rounded-3xl p-6 flex items-start gap-4"
+              style={{ background: "var(--color-card-cream)" }}
+            >
+              <div
+                className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center mt-0.5"
+                style={{ background: "rgba(45,106,79,0.12)" }}
+              >
+                <Mail size={16} style={{ color: "#2d6a4f" }} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold mb-0.5">Order details emailed</p>
+                <p className="text-xs" style={{ color: "var(--color-muted)" }}>
+                  A confirmation has been sent to{" "}
+                  <strong>{order.customer_email}</strong>.
                 </p>
-                <Link
-                  href="/account/orders"
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity hover:opacity-70"
-                  style={{ color: "var(--color-accent)" }}
-                >
-                  View my orders →
-                </Link>
-              </>
-            ) : (
-              <>
-                <p className="text-sm font-semibold mb-0.5">Check your email</p>
+              </div>
+            </div>
+
+            {/* Card 2: verification email (separate) */}
+            <div
+              className="rounded-3xl p-6 flex items-start gap-4"
+              style={{ background: "var(--color-card-stone)" }}
+            >
+              <div
+                className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center mt-0.5"
+                style={{ background: "rgba(190,58,35,0.08)" }}
+              >
+                <ShieldAlert size={16} style={{ color: "var(--color-accent)" }} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold mb-0.5">
+                  {accountStatus === "unverified"
+                    ? "Verify your account"
+                    : "Activate your account"}
+                </p>
                 <p className="text-xs mb-3" style={{ color: "var(--color-muted)" }}>
-                  We&apos;ve sent an activation link to{" "}
-                  <strong>{order.customer_email}</strong>. Click it to confirm your
-                  account and track this order. The link expires in 24 hours.
+                  {accountStatus === "unverified"
+                    ? "We've sent a verification link separately to "
+                    : "We've sent an activation link to "}
+                  <strong>{order.customer_email}</strong>.{" "}
+                  Click it to confirm your account and track orders. The link expires in 24 hours.
                 </p>
                 <Link
                   href={`/account/login?email=${encodeURIComponent(order.customer_email)}`}
@@ -121,10 +206,10 @@ export default async function OrderSuccessPage({
                 >
                   Sign in instead →
                 </Link>
-              </>
-            )}
+              </div>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Order items */}
         <div
@@ -171,7 +256,7 @@ export default async function OrderSuccessPage({
           </div>
         </div>
 
-        {/* Shipping + email info */}
+        {/* Shipping */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
           <div
             className="rounded-2xl p-5"
@@ -208,8 +293,8 @@ export default async function OrderSuccessPage({
             </div>
             <p className="text-sm font-medium">{order.customer_email}</p>
             <p className="text-xs mt-2" style={{ color: "var(--color-muted)" }}>
-              Check your inbox for the order receipt. Your account activation
-              link is in a separate email.
+              Check your inbox for the order receipt and, if applicable, a
+              separate account activation email.
             </p>
           </div>
         </div>

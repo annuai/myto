@@ -137,6 +137,18 @@ export function Footer({ className = "mt-24" }: { className?: string }) {
 
         </div>
       </div>
+
+      {/* Full-bleed footer image */}
+      <div style={{ background: "#f1ece7", lineHeight: 0 }}>
+        <Image
+          src="/footer/footer.png"
+          alt=""
+          width={2172}
+          height={724}
+          className="w-full h-auto block"
+          priority={false}
+        />
+      </div>
     </footer>
   );
 }

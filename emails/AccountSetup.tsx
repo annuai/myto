@@ -1,5 +1,5 @@
 import {
-  Html, Head, Body, Container, Section, Text, Button,
+  Html, Head, Body, Container, Section, Text, Button, Img,
 } from "@react-email/components";
 
 interface Props {
@@ -9,11 +9,32 @@ interface Props {
 }
 
 export function AccountSetupEmail({ name, actionLink, orderNumber }: Props) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://myto-moto.com";
+
   return (
     <Html lang="en">
       <Head />
       <Body style={{ background: "#f8f7f4", fontFamily: "ui-sans-serif, system-ui, sans-serif", margin: 0 }}>
         <Container style={{ maxWidth: 520, margin: "0 auto", padding: "40px 20px" }}>
+
+          {/* Favicon avatar + wordmark */}
+          <Section style={{ marginBottom: 32, textAlign: "center" as const }}>
+            <Img
+              src={`${siteUrl}/favicon.png`}
+              alt=""
+              width={36}
+              height={36}
+              style={{ borderRadius: 10, display: "inline-block", marginBottom: 10 }}
+            />
+            <br />
+            <Img
+              src={`${siteUrl}/myto-logo-dark.svg`}
+              alt="myto-moto"
+              width={80}
+              height={36}
+              style={{ display: "inline-block" }}
+            />
+          </Section>
 
           {/* Hero card */}
           <Section style={{ background: "#1c1c1a", borderRadius: 24, padding: "36px 40px", marginBottom: 20 }}>

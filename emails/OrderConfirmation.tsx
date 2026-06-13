@@ -18,20 +18,28 @@ export function OrderConfirmationEmail({ order, items }: Props) {
       <Body style={{ background: "#f8f7f4", fontFamily: "ui-sans-serif, system-ui, sans-serif", margin: 0 }}>
         <Container style={{ maxWidth: 560, margin: "0 auto", padding: "40px 20px" }}>
 
-          {/* Logo / header */}
-          <Section style={{ marginBottom: 32 }}>
+          {/* Favicon avatar + wordmark */}
+          <Section style={{ marginBottom: 32, textAlign: "center" as const }}>
             <Img
-              src={`${siteUrl}/myto-logo.svg`}
+              src={`${siteUrl}/favicon.png`}
+              alt=""
+              width={36}
+              height={36}
+              style={{ borderRadius: 10, display: "inline-block", marginBottom: 10 }}
+            />
+            <br />
+            <Img
+              src={`${siteUrl}/myto-logo-dark.svg`}
               alt="myto-moto"
               width={80}
               height={36}
-              style={{ filter: "brightness(0)" }}
+              style={{ display: "inline-block" }}
             />
           </Section>
 
           {/* Hero card */}
           <Section style={{ background: "#1c1c1a", borderRadius: 24, padding: "36px 40px", marginBottom: 20 }}>
-            <Text style={{ color: "rgba(245,240,232,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.15em", margin: "0 0 8px" }}>
+            <Text style={{ color: "rgba(245,240,232,0.4)", fontSize: 11, fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.15em", margin: "0 0 8px" }}>
               Order confirmed
             </Text>
             <Text style={{ color: "#f5f0e8", fontSize: 28, fontWeight: 400, margin: "0 0 12px", lineHeight: 1.2 }}>
@@ -45,7 +53,7 @@ export function OrderConfirmationEmail({ order, items }: Props) {
 
           {/* Items */}
           <Section style={{ background: "#e3ddd4", borderRadius: 24, padding: "28px 32px", marginBottom: 12 }}>
-            <Text style={{ fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.12em", color: "#6b6560", margin: "0 0 20px" }}>
+            <Text style={{ fontSize: 11, fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.12em", color: "#6b6560", margin: "0 0 20px" }}>
               Items ordered
             </Text>
             {items.map((item) => (
@@ -55,7 +63,7 @@ export function OrderConfirmationEmail({ order, items }: Props) {
                     {item.product_name}{item.quantity > 1 ? ` × ${item.quantity}` : ""}
                   </Text>
                   {item.is_pre_order && (
-                    <Text style={{ fontSize: 10, color: "#BE3A23", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", margin: "2px 0 0" }}>
+                    <Text style={{ fontSize: 10, color: "#BE3A23", fontWeight: 700, textTransform: "uppercase" as const, letterSpacing: "0.1em", margin: "2px 0 0" }}>
                       Pre-order · 20% off
                     </Text>
                   )}
@@ -82,7 +90,7 @@ export function OrderConfirmationEmail({ order, items }: Props) {
 
           {/* Shipping */}
           <Section style={{ background: "#ede8de", borderRadius: 24, padding: "24px 32px", marginBottom: 28 }}>
-            <Text style={{ fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.12em", color: "#6b6560", margin: "0 0 12px" }}>
+            <Text style={{ fontSize: 11, fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.12em", color: "#6b6560", margin: "0 0 12px" }}>
               Shipping to
             </Text>
             <Text style={{ fontSize: 14, fontWeight: 500, margin: 0, color: "#1a1a1a" }}>

@@ -1,5 +1,5 @@
 import {
-  Html, Head, Body, Container, Section, Text, Hr, Row, Column,
+  Html, Head, Body, Container, Section, Text, Hr, Row, Column, Img,
 } from "@react-email/components";
 import { formatPaise } from "@/lib/order-utils";
 import type { DBOrder, DBOrderItem } from "@/lib/types";
@@ -10,7 +10,8 @@ interface Props {
 }
 
 export function AdminNotificationEmail({ order, items }: Props) {
-  const adminUrl = `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://myto-moto.com"}/admin/orders/${order.id}`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://myto-moto.com";
+  const adminUrl = `${siteUrl}/admin/orders/${order.id}`;
 
   return (
     <Html lang="en">
@@ -18,8 +19,28 @@ export function AdminNotificationEmail({ order, items }: Props) {
       <Body style={{ background: "#f8f7f4", fontFamily: "ui-sans-serif, system-ui, sans-serif", margin: 0 }}>
         <Container style={{ maxWidth: 560, margin: "0 auto", padding: "40px 20px" }}>
 
+          {/* Favicon avatar + wordmark */}
+          <Section style={{ marginBottom: 28, textAlign: "center" as const }}>
+            <Img
+              src={`${siteUrl}/favicon.png`}
+              alt=""
+              width={36}
+              height={36}
+              style={{ borderRadius: 10, display: "inline-block", marginBottom: 10 }}
+            />
+            <br />
+            <Img
+              src={`${siteUrl}/myto-logo-dark.svg`}
+              alt="myto-moto"
+              width={80}
+              height={36}
+              style={{ display: "inline-block" }}
+            />
+          </Section>
+
+          {/* Hero card */}
           <Section style={{ background: "#BE3A23", borderRadius: 24, padding: "28px 32px", marginBottom: 16 }}>
-            <Text style={{ color: "rgba(255,255,255,0.7)", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.15em", margin: "0 0 6px" }}>
+            <Text style={{ color: "rgba(255,255,255,0.7)", fontSize: 11, fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.15em", margin: "0 0 6px" }}>
               New order
             </Text>
             <Text style={{ color: "#fff", fontSize: 26, fontWeight: 600, margin: "0 0 4px" }}>
@@ -32,7 +53,7 @@ export function AdminNotificationEmail({ order, items }: Props) {
 
           {/* Customer */}
           <Section style={{ background: "#e3ddd4", borderRadius: 20, padding: "24px 28px", marginBottom: 12 }}>
-            <Text style={{ fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.12em", color: "#6b6560", margin: "0 0 12px" }}>
+            <Text style={{ fontSize: 11, fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.12em", color: "#6b6560", margin: "0 0 12px" }}>
               Customer
             </Text>
             <Text style={{ fontSize: 14, fontWeight: 500, margin: "0 0 2px", color: "#1a1a1a" }}>{order.customer_name}</Text>
@@ -42,7 +63,7 @@ export function AdminNotificationEmail({ order, items }: Props) {
 
           {/* Items */}
           <Section style={{ background: "#ede8de", borderRadius: 20, padding: "24px 28px", marginBottom: 12 }}>
-            <Text style={{ fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.12em", color: "#6b6560", margin: "0 0 12px" }}>
+            <Text style={{ fontSize: 11, fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.12em", color: "#6b6560", margin: "0 0 12px" }}>
               Items
             </Text>
             {items.map((item) => (
@@ -73,7 +94,7 @@ export function AdminNotificationEmail({ order, items }: Props) {
 
           {/* Shipping */}
           <Section style={{ background: "#e3ddd4", borderRadius: 20, padding: "20px 28px", marginBottom: 20 }}>
-            <Text style={{ fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.12em", color: "#6b6560", margin: "0 0 8px" }}>
+            <Text style={{ fontSize: 11, fontWeight: 600, textTransform: "uppercase" as const, letterSpacing: "0.12em", color: "#6b6560", margin: "0 0 8px" }}>
               Ship to
             </Text>
             <Text style={{ fontSize: 13, margin: 0, color: "#1a1a1a", lineHeight: 1.6 }}>

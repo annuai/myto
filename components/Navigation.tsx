@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { ShoppingBag, Menu, X, Search, User } from "lucide-react";
+import { ShoppingBag, Menu, X, Search, User, ArrowRight } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { CartDrawer } from "./CartDrawer";
 import { motion, AnimatePresence } from "framer-motion";
@@ -29,7 +29,6 @@ export function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Subscribe to Supabase auth state
   useEffect(() => {
     const supabase = createSupabaseBrowserClient();
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -54,23 +53,28 @@ export function Navigation() {
     setMobileSearch("");
   }, [pathname]);
 
-  // Pages with a dark hero need inverted (white) nav until the pill kicks in.
+  // Lock body scroll while mobile overlay is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
   const darkHeroPage = false;
-
-  // When scrolled: floating pill. When at top: edge-to-edge transparent bar.
   const floatingPill = scrolled && !mobileOpen;
-
-  // Background is white whenever floatingPill OR mobileOpen — both need dark text/logo.
   const invertNav = darkHeroPage && !floatingPill && !mobileOpen;
 
-  // Don't render the public nav inside the admin panel
+  const navBarBg = mobileOpen
+    ? "var(--color-background)"
+    : floatingPill
+    ? "rgba(255,255,255,0.97)"
+    : "transparent";
+
   if (pathname.startsWith("/admin")) return null;
 
   return (
     <>
-      {/* Outer wrapper */}
+      {/* ── Nav bar ─────────────────────────────────────────────────── */}
       <div className="fixed top-0 left-0 right-0 z-50 flex items-start justify-center pointer-events-none">
-        {/* Nav bar — pill uses container-wide max-width, full-width otherwise */}
         <motion.header
           className="pointer-events-auto w-full"
           style={{ maxWidth: floatingPill ? 1400 : "none" }}
@@ -84,25 +88,23 @@ export function Navigation() {
           <motion.div
             animate={
               floatingPill
-                ? {
-                    borderRadius: 9999,
-                    boxShadow: "0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06)",
-                  }
-                : {
-                    borderRadius: 0,
-                    boxShadow: "none",
-                  }
+                ? { borderRadius: 9999, boxShadow: "0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06)" }
+                : { borderRadius: 0, boxShadow: "none" }
             }
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              background: (floatingPill || mobileOpen) ? "rgba(255,255,255,0.97)" : "transparent",
+              background: navBarBg,
               backdropFilter: (floatingPill || mobileOpen) ? "blur(16px)" : "none",
               borderBottom: !floatingPill && !mobileOpen && !isHeroPage ? "1px solid rgba(0,0,0,0.07)" : "none",
             }}
           >
             <div className={floatingPill ? "" : "container-wide"}>
-              <div className="flex items-center justify-between h-14" style={floatingPill ? { paddingLeft: 20, paddingRight: 20 } : {}}>
-                <Link href="/" className="flex items-center">
+              <div
+                className="flex items-center justify-between h-14"
+                style={floatingPill ? { paddingLeft: 20, paddingRight: 20 } : {}}
+              >
+                {/* Logo */}
+                <Link href="/" className="flex items-center" onClick={() => setMobileOpen(false)}>
                   <div className="relative h-[34px] w-[72px]">
                     <Image
                       src="/myto-logo.svg"
@@ -144,8 +146,11 @@ export function Navigation() {
 
                 {/* Actions */}
                 <div className="flex items-center gap-1">
+                  {/* Desktop search */}
                   <button
-                    onClick={() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true, bubbles: true }))}
+                    onClick={() =>
+                      window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true, bubbles: true }))
+                    }
                     className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs transition-colors hover:bg-black/5"
                     style={{ color: invertNav ? "rgba(245,240,232,0.6)" : "var(--color-muted)" }}
                     aria-label="Search"
@@ -159,7 +164,8 @@ export function Navigation() {
                       ⌘K
                     </kbd>
                   </button>
-                  {/* Auth — desktop only */}
+
+                  {/* Desktop auth */}
                   <div className="hidden md:flex items-center gap-0.5">
                     {authUser ? (
                       <>
@@ -184,21 +190,20 @@ export function Navigation() {
                         </button>
                       </>
                     ) : (
-                      <>
-                        <Link
-                          href="/account/login"
-                          className="px-3 py-1.5 rounded-xl text-xs font-medium transition-colors hover:bg-black/5"
-                          style={{ color: invertNav ? "rgba(245,240,232,0.65)" : "var(--color-muted)" }}
-                        >
-                          Sign in
-                        </Link>
-                      </>
+                      <Link
+                        href="/account/login"
+                        className="px-3 py-1.5 rounded-xl text-xs font-medium transition-colors hover:bg-black/5"
+                        style={{ color: invertNav ? "rgba(245,240,232,0.65)" : "var(--color-muted)" }}
+                      >
+                        Sign in
+                      </Link>
                     )}
                   </div>
 
+                  {/* Cart */}
                   <button
                     onClick={toggleCart}
-                    className="relative p-2 rounded-xl transition-colors hover:bg-white/10"
+                    className="relative p-2 rounded-xl transition-colors hover:bg-black/5"
                     style={{ color: invertNav ? "rgba(245,240,232,0.85)" : "var(--color-foreground)" }}
                     aria-label={`Cart (${itemCount} items)`}
                   >
@@ -212,111 +217,218 @@ export function Navigation() {
                       </span>
                     )}
                   </button>
+
+                  {/* Mobile hamburger */}
                   <button
-                    className="md:hidden p-2 rounded-xl transition-colors hover:bg-white/10"
+                    className="md:hidden p-2 rounded-xl transition-colors hover:bg-black/5"
                     style={{ color: invertNav ? "rgba(245,240,232,0.85)" : "var(--color-foreground)" }}
                     onClick={() => setMobileOpen((v) => !v)}
-                    aria-label="Menu"
+                    aria-label={mobileOpen ? "Close menu" : "Open menu"}
                   >
-                    {mobileOpen ? <X size={19} /> : <Menu size={19} />}
+                    <AnimatePresence mode="wait" initial={false}>
+                      {mobileOpen ? (
+                        <motion.span
+                          key="close"
+                          initial={{ rotate: -45, opacity: 0 }}
+                          animate={{ rotate: 0, opacity: 1 }}
+                          exit={{ rotate: 45, opacity: 0 }}
+                          transition={{ duration: 0.18 }}
+                          style={{ display: "flex" }}
+                        >
+                          <X size={19} />
+                        </motion.span>
+                      ) : (
+                        <motion.span
+                          key="open"
+                          initial={{ rotate: 45, opacity: 0 }}
+                          animate={{ rotate: 0, opacity: 1 }}
+                          exit={{ rotate: -45, opacity: 0 }}
+                          transition={{ duration: 0.18 }}
+                          style={{ display: "flex" }}
+                        >
+                          <Menu size={19} />
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
                   </button>
                 </div>
               </div>
             </div>
           </motion.div>
+        </motion.header>
+      </div>
 
-          {/* Mobile menu — drops below the pill */}
-          <AnimatePresence>
-            {mobileOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="md:hidden overflow-hidden mx-4 rounded-b-2xl"
-                style={{
-                  background: "rgba(248,247,244,0.97)",
-                  backdropFilter: "blur(16px)",
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
-                }}
-              >
-                {/* Search bar */}
-                <div className="px-4 pt-4 pb-3">
-                  <div
-                    className="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl"
-                    style={{ background: "rgba(0,0,0,0.05)" }}
-                  >
-                    <Search size={14} style={{ color: "var(--color-muted)", flexShrink: 0 }} />
-                    <input
-                      type="text"
-                      placeholder="Search pages, products..."
-                      value={mobileSearch}
-                      onChange={(e) => setMobileSearch(e.target.value)}
-                      className="flex-1 text-sm outline-none bg-transparent"
-                      style={{ color: "var(--color-foreground)" }}
-                      autoComplete="off"
-                    />
-                    {mobileSearch && (
-                      <button onClick={() => setMobileSearch("")} aria-label="Clear search">
-                        <X size={13} style={{ color: "var(--color-muted)" }} />
-                      </button>
-                    )}
-                  </div>
+      {/* ── Mobile fullscreen overlay ───────────────────────────────── */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="fixed inset-0 z-[45] flex flex-col md:hidden"
+            style={{ background: "var(--color-background)" }}
+          >
+            {/* Matches nav bar height so content starts below it */}
+            <div className="h-14 flex-shrink-0" />
+
+            <div className="flex flex-col flex-1 min-h-0 overflow-y-auto">
+              {/* Search bar */}
+              <div className="px-5 pt-5 pb-2">
+                <div
+                  className="flex items-center gap-2.5 px-4 py-3 rounded-2xl"
+                  style={{ background: "rgba(0,0,0,0.05)" }}
+                >
+                  <Search size={14} style={{ color: "var(--color-muted)", flexShrink: 0 }} />
+                  <input
+                    type="text"
+                    placeholder="Search products, pages..."
+                    value={mobileSearch}
+                    onChange={(e) => setMobileSearch(e.target.value)}
+                    className="flex-1 text-sm outline-none bg-transparent"
+                    style={{ color: "var(--color-foreground)" }}
+                    autoComplete="off"
+                  />
+                  {mobileSearch && (
+                    <button onClick={() => setMobileSearch("")} aria-label="Clear search">
+                      <X size={13} style={{ color: "var(--color-muted)" }} />
+                    </button>
+                  )}
                 </div>
+              </div>
 
-                {/* Nav links or search results */}
-                {mobileSearch.trim() ? (
-                  <div className="px-4 pb-5">
-                    {filterItems(mobileSearch).length === 0 ? (
-                      <p className="text-sm py-4 text-center" style={{ color: "var(--color-muted)" }}>
-                        No results for &ldquo;{mobileSearch}&rdquo;
-                      </p>
-                    ) : (
-                      filterItems(mobileSearch).map((item) => (
-                        <button
-                          key={item.href}
-                          onClick={() => {
-                            setMobileOpen(false);
-                            if (item.href.startsWith("mailto:")) {
-                              window.location.href = item.href;
-                            } else {
-                              router.push(item.href);
-                            }
-                          }}
-                          className="w-full flex flex-col items-start py-2.5 border-b last:border-0 text-left"
-                          style={{ borderColor: "rgba(0,0,0,0.06)" }}
-                        >
-                          <span className="text-sm font-medium" style={{ color: "var(--color-foreground)" }}>
-                            {item.title}
-                          </span>
-                          <span className="text-xs" style={{ color: "var(--color-muted)" }}>
-                            {item.description}
-                          </span>
-                        </button>
-                      ))
-                    )}
-                  </div>
-                ) : (
-                  <nav className="px-6 pb-5 flex flex-col gap-0.5">
-                    {navLinks.map((link) => (
+              {/* Nav links or search results */}
+              {mobileSearch.trim() ? (
+                <div className="flex-1 px-5 pt-3 pb-5">
+                  {filterItems(mobileSearch).length === 0 ? (
+                    <p className="text-sm py-8 text-center" style={{ color: "var(--color-muted)" }}>
+                      No results for &ldquo;{mobileSearch}&rdquo;
+                    </p>
+                  ) : (
+                    filterItems(mobileSearch).map((item) => (
+                      <button
+                        key={item.href}
+                        onClick={() => {
+                          setMobileOpen(false);
+                          if (item.href.startsWith("mailto:")) {
+                            window.location.href = item.href;
+                          } else {
+                            router.push(item.href);
+                          }
+                        }}
+                        className="w-full flex flex-col items-start py-3 border-b last:border-0 text-left"
+                        style={{ borderColor: "rgba(0,0,0,0.06)" }}
+                      >
+                        <span className="text-sm font-medium" style={{ color: "var(--color-foreground)" }}>
+                          {item.title}
+                        </span>
+                        <span className="text-xs mt-0.5" style={{ color: "var(--color-muted)" }}>
+                          {item.description}
+                        </span>
+                      </button>
+                    ))
+                  )}
+                </div>
+              ) : (
+                <nav className="flex-1 px-5 pt-3">
+                  {navLinks.map((link, i) => (
+                    <motion.div
+                      key={link.href}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.045 + 0.06, duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    >
                       <Link
-                        key={link.href}
                         href={link.href}
-                        className="text-base font-medium py-3 border-b last:border-0 transition-opacity hover:opacity-60"
+                        className="flex items-center justify-between py-[15px] border-b transition-opacity hover:opacity-50"
                         style={{
                           color: pathname === link.href ? "var(--color-accent)" : "var(--color-foreground)",
                           borderColor: "rgba(0,0,0,0.06)",
                         }}
                       >
-                        {link.label}
+                        <span className="text-[22px] font-medium tracking-tight leading-none">
+                          {link.label}
+                        </span>
+                        {pathname === link.href && (
+                          <span
+                            className="w-[6px] h-[6px] rounded-full flex-shrink-0"
+                            style={{ background: "var(--color-accent)" }}
+                          />
+                        )}
                       </Link>
-                    ))}
-                  </nav>
+                    </motion.div>
+                  ))}
+                </nav>
+              )}
+
+              {/* Auth section — pinned to bottom */}
+              <motion.div
+                className="px-5 py-6 mt-auto"
+                style={{ borderTop: "1px solid rgba(0,0,0,0.07)" }}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {authUser ? (
+                  <div className="flex items-center justify-between">
+                    <Link href="/account/orders" className="flex items-center gap-3 min-w-0">
+                      <div
+                        className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+                        style={{ background: "rgba(0,0,0,0.07)" }}
+                      >
+                        <User size={15} style={{ color: "var(--color-foreground)" }} />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium leading-tight" style={{ color: "var(--color-foreground)" }}>
+                          My Orders
+                        </p>
+                        <p className="text-xs truncate mt-0.5" style={{ color: "var(--color-muted)" }}>
+                          {authUser.email}
+                        </p>
+                      </div>
+                    </Link>
+                    <button
+                      onClick={async () => {
+                        const { createSupabaseBrowserClient } = await import("@/lib/supabase-browser");
+                        await createSupabaseBrowserClient().auth.signOut();
+                        router.refresh();
+                      }}
+                      className="ml-3 flex-shrink-0 text-xs px-3 py-1.5 rounded-xl transition-colors hover:bg-black/5"
+                      style={{ color: "var(--color-muted)" }}
+                    >
+                      Sign out
+                    </button>
+                  </div>
+                ) : (
+                  <Link
+                    href="/account/login"
+                    className="flex items-center justify-between w-full px-4 py-3.5 rounded-2xl transition-colors active:bg-black/10"
+                    style={{ background: "rgba(0,0,0,0.04)" }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+                        style={{ background: "rgba(0,0,0,0.07)" }}
+                      >
+                        <User size={15} style={{ color: "var(--color-foreground)" }} />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium leading-tight" style={{ color: "var(--color-foreground)" }}>
+                          Sign in
+                        </p>
+                        <p className="text-xs mt-0.5" style={{ color: "var(--color-muted)" }}>
+                          Access your orders & account
+                        </p>
+                      </div>
+                    </div>
+                    <ArrowRight size={15} style={{ color: "var(--color-muted)", flexShrink: 0 }} />
+                  </Link>
                 )}
               </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.header>
-      </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <CartDrawer />
     </>
