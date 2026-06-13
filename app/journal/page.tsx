@@ -87,6 +87,7 @@ export default function JournalPage() {
                   background: categoryColors[featured.category] ?? "var(--color-card-stone)",
                 }}
               >
+                {/* Content capped at max-w-2xl */}
                 <div className="max-w-2xl">
                   <div className="flex items-center gap-3 mb-6">
                     <span
@@ -100,24 +101,26 @@ export default function JournalPage() {
                     </span>
                   </div>
                   <h2 className="display-md mb-4 leading-tight">{featured.title}</h2>
-                  <p className="text-base leading-relaxed mb-8" style={{ color: "var(--color-muted)" }}>
+                  <p className="text-base leading-relaxed" style={{ color: "var(--color-muted)" }}>
                     {featured.excerpt}
                   </p>
-                  <div className="flex items-center gap-5">
-                    <span className="text-sm font-medium">{featured.author}</span>
-                    <span className="text-sm" style={{ color: "var(--color-muted)" }}>
-                      {formatDate(featured.date)}
-                    </span>
-                    <span className="text-sm" style={{ color: "var(--color-muted)" }}>
-                      {featured.readTime}
-                    </span>
-                    <span
-                      className="ml-auto text-sm font-semibold transition-colors group-hover:text-[var(--color-accent)]"
-                      style={{ color: "var(--color-foreground)" }}
-                    >
-                      Read article →
-                    </span>
-                  </div>
+                </div>
+
+                {/* Bottom row spans full card width so "Read article →" reaches the right edge */}
+                <div className="flex items-center gap-5 mt-8">
+                  <span className="text-sm font-medium">{featured.author}</span>
+                  <span className="text-sm" style={{ color: "var(--color-muted)" }}>
+                    {formatDate(featured.date)}
+                  </span>
+                  <span className="text-sm" style={{ color: "var(--color-muted)" }}>
+                    {featured.readTime}
+                  </span>
+                  <span
+                    className="ml-auto text-sm font-semibold transition-colors group-hover:text-[var(--color-accent)]"
+                    style={{ color: "var(--color-foreground)" }}
+                  >
+                    Read article →
+                  </span>
                 </div>
               </div>
             </Link>
