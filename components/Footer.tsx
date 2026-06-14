@@ -36,6 +36,7 @@ const navColumns = [
     links: [
       { label: "About", href: "/about" },
       { label: "Journal", href: "/journal" },
+      { label: "Club", href: "/club" },
       { label: "Contact", href: "/support" },
     ],
   },
