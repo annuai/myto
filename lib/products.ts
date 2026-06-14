@@ -74,7 +74,7 @@ export const products: Product[] = [
       "Colour Temperature": "5,000K white / 3,000K selective yellow",
       "Wire Harness": "Relay, fuse, handlebar switch included",
       "Input Voltage": "10–15V DC",
-      "Weight": "210g per lamp",
+      Weight: "210g per lamp",
     },
     compatibility: [
       "Universal 12V systems",
@@ -97,7 +97,8 @@ export const products: Product[] = [
       "Installation guide",
     ],
     installTime: "60–90 minutes",
-    materials: "Die-cast aluminium housing, polycarbonate lens, stainless steel hardware, silicone gaskets",
+    materials:
+      "Die-cast aluminium housing, polycarbonate lens, stainless steel hardware, silicone gaskets",
     ecosystemNote:
       "Pairs directly with Navi for integrated lighting triggers. The Trail Beam harness includes a signal output compatible with the navi's accessory port.",
     preOrderSeats: 100,
@@ -146,14 +147,14 @@ export const products: Product[] = [
       },
     ],
     specs: {
-      "Volume": "8L standard / 12L expanded",
+      Volume: "8L standard / 12L expanded",
       "Outer Material": "600D polyester with PU coating",
       "Inner Lining": "PU-coated ripstop",
-      "Magnets": "N52 rare-earth, foam-padded",
-      "Zippers": "YKK water-resistant throughout",
+      Magnets: "N52 rare-earth, foam-padded",
+      Zippers: "YKK water-resistant throughout",
       "Tool Roll Material": "Waxed cotton canvas",
       "Tool Roll Capacity": "18 tool pockets",
-      "Strapping": "25mm polypropylene with aluminium buckles",
+      Strapping: "25mm polypropylene with aluminium buckles",
       "Weight (bag only)": "420g",
       "Weight (complete kit)": "680g",
     },
@@ -172,7 +173,8 @@ export const products: Product[] = [
       "Care instructions for waxed canvas",
     ],
     installTime: "5 minutes (magnetic mount)",
-    materials: "600D polyester, PU-coated ripstop, waxed cotton canvas, N52 rare-earth magnets, YKK zippers, aluminium hardware",
+    materials:
+      "600D polyester, PU-coated ripstop, waxed cotton canvas, N52 rare-earth magnets, YKK zippers, aluminium hardware",
     ecosystemNote:
       "Designed to carry the Trail Beam harness cleanly and route cables through the base grommet. The map pocket aligns with Navi's mount position on most handlebars.",
     preOrderSeats: 100,
@@ -183,16 +185,16 @@ export const products: Product[] = [
     name: "Navi",
     tagline: "Navigate. Nothing else.",
     description:
-      "A dedicated motorcycle navigation unit that does one thing right: turn-by-turn navigation with a sunlight-readable 3.5\" display, 12-hour battery, and vibration-isolated mount. No social features. No distractions.",
+      'A dedicated motorcycle navigation unit that does one thing right: turn-by-turn navigation with a sunlight-readable 3.5" display, 12-hour battery, and vibration-isolated mount. No social features. No distractions.',
     longDescription:
-      "Phones fail as navigation devices on motorcycles for specific, solvable reasons: heat management failures, display glare, vibration damage to OIS cameras, and notification interruptions. The Navi was designed to solve each problem without compromise. The 3.5\" IPS display runs at 800 nits — readable in direct Rajasthani sunlight. The vibration-isolated mount uses dual-axis dampening so the unit absorbs handlebar input rather than transmitting it to the screen. Offline maps mean you navigate in areas with no signal as naturally as in cities.",
-    price: 11000,
+      'Phones fail as navigation devices on motorcycles for specific, solvable reasons: heat management failures, display glare, vibration damage to OIS cameras, and notification interruptions. The Navi was designed to solve each problem without compromise. The 3.5" IPS display runs at 800 nits — readable in direct Rajasthani sunlight. The vibration-isolated mount uses dual-axis dampening so the unit absorbs handlebar input rather than transmitting it to the screen. Offline maps mean you navigate in areas with no signal as naturally as in cities.',
+    price: 16000,
     category: "Navigation",
     features: [
       {
         title: "Sunlight-readable display",
         description:
-          "3.5\" IPS panel at 800 nits brightness with anti-reflective coating. Readable in direct sun without shade or squinting.",
+          '3.5" IPS panel at 800 nits brightness with anti-reflective coating. Readable in direct sun without shade or squinting.',
       },
       {
         title: "Offline maps",
@@ -221,23 +223,23 @@ export const products: Product[] = [
       },
     ],
     specs: {
-      "Display": "3.5\" IPS, 480×320",
-      "Brightness": "800 nits",
-      "Battery": "4,400mAh Li-Ion",
+      Display: '3.5" IPS, 480×320',
+      Brightness: "800 nits",
+      Battery: "4,400mAh Li-Ion",
       "Battery Life": "12 hours navigation",
-      "Charging": "USB-C, 18W",
-      "Maps": "Offline (India pre-loaded)",
+      Charging: "USB-C, 18W",
+      Maps: "Offline (India pre-loaded)",
       "Mount Type": "Vibration-isolated RAM-compatible",
       "Mount Bar Diameter": "22mm / 28.6mm",
-      "GPS": "Multi-constellation (GPS + GLONASS)",
+      GPS: "Multi-constellation (GPS + GLONASS)",
       "IP Rating": "IPX5",
       "Operating Temperature": "-10°C to +65°C",
       "Weight (unit)": "185g",
       "Weight (with mount)": "260g",
     },
     compatibility: [
-      "22mm (7/8\") handlebars — universal",
-      "28.6mm (1-1/8\") handlebars — universal",
+      '22mm (7/8") handlebars — universal',
+      '28.6mm (1-1/8") handlebars — universal',
       "RAM Mount B-ball compatible",
       "All motorcycles with 12V USB-C or standard socket",
     ],
@@ -251,7 +253,8 @@ export const products: Product[] = [
       "Quick start guide",
     ],
     installTime: "20 minutes",
-    materials: "Polycarbonate housing with aluminium reinforcement, IPS display, silicone vibration dampers, stainless hardware",
+    materials:
+      "Polycarbonate housing with aluminium reinforcement, IPS display, silicone vibration dampers, stainless hardware",
     ecosystemNote:
       "The Navi accessory port connects to the Trail Beam harness signal output for automatic light control. Works with Trail Kit for integrated handlebar-area organisation.",
     preOrderSeats: 100,
