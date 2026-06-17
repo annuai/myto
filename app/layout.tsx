@@ -61,6 +61,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geist.variable} ${michroma.variable}`} suppressHydrationWarning>
+      <head>
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="a755ce68-36db-453e-9a48-0f97582e059e"></script>
+      </head>
       <body>
         <CartProvider>
           <Navigation />
