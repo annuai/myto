@@ -6,6 +6,7 @@ import { motion, useInView } from "framer-motion";
 import { Wrench, Shield, Compass, RotateCcw, MapPin, Layers } from "lucide-react";
 import { ProductRender } from "@/components/ProductRender";
 import { Footer } from "@/components/Footer";
+import { AppBand } from "@/components/home/AppBand";
 import { products } from "@/lib/products";
 import { articles } from "@/lib/journal";
 import { formatPrice } from "@/lib/format";
@@ -174,6 +175,8 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
+
+      <AppBand />
 
       {/* SECTION 2: Product Grid */}
       <section className="py-16">
