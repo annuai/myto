@@ -5,11 +5,9 @@ import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { Footer } from "@/components/Footer";
 import { DownloadButton } from "@/components/app/DownloadButton";
+import { PhoneShowcase } from "@/components/app/PhoneShowcase";
 import { WaitlistForm } from "@/components/app/WaitlistForm";
 import { beta } from "@/lib/beta";
-
-// Swap for the generated hero when it exists (see docs/app-image-prompts.md).
-const HERO_SRC = "/hero-image.png";
 
 function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   const ref = useRef(null);
@@ -82,10 +80,9 @@ export default function AppPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-10 aspect-[4/3] overflow-hidden rounded-3xl sm:aspect-[16/9] md:aspect-[21/9]"
+            className="mt-10 overflow-hidden rounded-3xl"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={HERO_SRC} alt="A motorcycle headlight beaded with rain" className="h-full w-full object-cover" />
+            <PhoneShowcase />
           </motion.div>
         </div>
       </section>
