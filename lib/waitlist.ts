@@ -21,11 +21,18 @@ export async function addToWaitlist(input: {
   const source = WAITLIST_SOURCES.find((s) => s === input.source) ?? "myto-moto";
   const platform = WAITLIST_PLATFORMS.find((p) => p === input.platform) ?? null;
 
-  const { error } = await createPublicClient()
-    .from("newsletter_subscribers")
-    .insert({ email, source, platform });
+  const table = createPublicClient().from("newsletter_subscribers");
+  let { error } = await table.insert({ email, source, platform });
 
+  // Before migration 006 reaches a database the source and platform columns do not exist.
+  // Keep signup working with just the email rather than failing the visitor.
+  if (error && (error.code === "PGRST204" || error.code === "42703")) {
+    ({ error } = await table.insert({ email }));
+  }
+
+  // 23505: already on the list, which counts as success.
   if (error && error.code !== "23505") {
+    console.error("waitlist insert failed", error.code, error.message);
     return { error: "Something went wrong. Please try again.", success: false };
   }
   return { error: null, success: true };
