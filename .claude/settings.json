@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./package-lock.json)",
+      "Read(./.next/**)",
+      "Read(./node_modules/**)",
+      "Read(./tsconfig.tsbuildinfo)",
+      "Read(./public/**/*.png)",
+      "Read(./public/**/*.jpg)",
+      "Read(./public/**/*.apk)"
+    ]
+  }
+}
